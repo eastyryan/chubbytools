@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<title>Chubby's — Made of What Was Already Here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3ede1;
+    --paper: #faf5ea;
+    --card: #ede5d3;
+    --ink: #2b2a23;
+    --ink-soft: #6c685c;
+    --rule: #d6cbb2;
+    --red: #b8392c;
+    --yellow: #e6b733;
+    --sage: #5a7548;
+    --sage-soft: #b8c4a3;
+    --terracotta: #c97b54;
+  }
+  [data-theme="dark"] {
+    --bg: #181612;
+    --paper: #211e18;
+    --card: #2a261e;
+    --ink: #efe9d8;
+    --ink-soft: #a8a292;
+    --rule: #3a3429;
+    --red: #e0584d;
+    --yellow: #e6b733;
+    --sage: #9ab382;
+    --sage-soft: #4a5a3a;
+    --terracotta: #d9956d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink);
+    -webkit-font-smoothing: antialiased; line-height: 1.55;
+    transition: background .35s ease, color .35s ease;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* Header */
+  header {
+    padding: 18px 0;
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 30;
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav { display: flex; align-items: center; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
+  .brand-mark {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--sage-soft);
+    display: grid; place-items: center;
+    font-family: 'Instrument Serif', serif; font-style: italic; font-size: 22px;
+    color: var(--sage);
+  }
+  [data-theme="dark"] .brand-mark { color: #181612; }
+  .brand-name {
+    font-family: 'Instrument Serif', serif; font-size: 22px;
+    font-weight: 400; letter-spacing: -0.01em;
+  }
+  nav.links { display: flex; gap: 28px; margin-left: auto; }
+  nav.links a { color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; }
+  nav.links a:hover { color: var(--ink); }
+  .theme-toggle {
+    display: inline-flex; gap: 4px; padding: 4px;
+    background: var(--card); border-radius: 999px; border: 1px solid var(--rule);
+  }
+  .theme-toggle button {
+    background: transparent; border: none; padding: 6px 12px;
+    border-radius: 999px; cursor: pointer; color: var(--ink-soft);
+    font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 12px;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .theme-toggle button.active { background: var(--ink); color: var(--bg); }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 14px; border-radius: 999px;
+    background: var(--sage-soft); color: var(--sage);
+    font-size: 12px; font-weight: 600; letter-spacing: .04em;
+  }
+  [data-theme="dark"] .hero-eyebrow { color: #181612; }
+  .hero-eyebrow .leaf {
+    width: 14px; height: 14px; border-radius: 50% 0;
+    background: var(--sage); transform: rotate(45deg);
+  }
+  [data-theme="dark"] .hero-eyebrow .leaf { background: #181612; }
+  .hero h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: clamp(56px, 8vw, 112px); line-height: .98;
+    letter-spacing: -0.02em; margin: 24px 0 24px;
+    text-wrap: balance; max-width: 14ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--sage); }
+  .hero p.lede {
+    font-size: 19px; color: var(--ink-soft); max-width: 48ch; line-height: 1.55; margin: 0 0 32px;
+  }
+  .cta-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 24px; border-radius: 999px;
+    font-weight: 600; font-size: 14.5px; text-decoration: none;
+    transition: transform .15s ease, background .15s ease;
+    border: 1.5px solid transparent;
+  }
+  .btn-primary { background: var(--sage); color: var(--paper); }
+  [data-theme="dark"] .btn-primary { color: #181612; }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  /* Hero composition */
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+  .hero-collage {
+    position: relative; aspect-ratio: 4/5;
+  }
+  .hero-collage .photo {
+    position: absolute; inset: 0; border-radius: 24px; overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(60,40,20,.3);
+  }
+  .hero-collage .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-collage .sticker {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 140px; height: 140px; border-radius: 50%;
+    background: var(--yellow); color: #1a1612;
+    display: grid; place-items: center; text-align: center;
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 17px; line-height: 1.15;
+    transform: rotate(-12deg);
+    border: 2px solid var(--red);
+    box-shadow: 0 14px 28px -10px rgba(0,0,0,.25);
+    padding: 0 14px;
+  }
+  .hero-collage .sticker em { display: block; font-size: 28px; font-style: italic; }
+
+  /* Sustainability strip */
+  .strip {
+    background: var(--sage); color: var(--paper);
+    padding: 28px 0; overflow: hidden;
+    position: relative;
+  }
+  [data-theme="dark"] .strip { color: #181612; }
+  .strip-track {
+    display: flex; gap: 64px; white-space: nowrap;
+    animation: scroll 40s linear infinite;
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 28px; align-items: center;
+  }
+  .strip-track span { display: inline-flex; align-items: center; gap: 64px; }
+  .strip-track .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .5; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Section */
+  section { padding: 96px 0; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--sage); font-weight: 700; margin-bottom: 12px;
+  }
+  h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: clamp(40px, 5vw, 64px); line-height: 1.02;
+    letter-spacing: -0.02em; margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  h2 em { font-style: italic; color: var(--sage); }
+  .section-lede { font-size: 18px; color: var(--ink-soft); max-width: 56ch; }
+
+  /* Story (recycled cycle) */
+  .story-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    margin-top: 56px;
+  }
+  .story-card {
+    background: var(--paper); border-radius: 24px;
+    padding: 36px 30px;
+    display: flex; flex-direction: column; gap: 12px;
+    border: 1px solid var(--rule);
+    position: relative; overflow: hidden;
+  }
+  .story-card .step {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 64px; line-height: 1; color: var(--sage);
+    margin-bottom: 8px;
+  }
+  .story-card h3 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px;
+    margin: 0; letter-spacing: -0.01em;
+  }
+  .story-card p { color: var(--ink-soft); font-size: 15px; margin: 0; }
+  .story-card.accent { background: var(--sage); color: var(--paper); border: none; }
+  [data-theme="dark"] .story-card.accent { color: #181612; }
+  .story-card.accent .step,
+  .story-card.accent h3,
+  .story-card.accent p { color: currentColor; }
+  .story-card.accent p { opacity: .85; }
+
+  /* Features (warmth grid) */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    margin-top: 48px;
+  }
+  .feature-card {
+    background: var(--paper); border-radius: 24px; padding: 32px;
+    border: 1px solid var(--rule);
+    display: flex; gap: 24px; align-items: flex-start;
+  }
+  .feature-card .icon {
+    width: 52px; height: 52px; flex-shrink: 0;
+    border-radius: 14px;
+    display: grid; place-items: center;
+    background: var(--sage-soft); color: var(--sage);
+    font-family: 'Instrument Serif', serif; font-size: 26px; font-style: italic;
+  }
+  [data-theme="dark"] .feature-card .icon { color: #181612; }
+  .feature-card.warm .icon { background: rgba(201,123,84,.2); color: var(--terracotta); }
+  .feature-card.red .icon { background: rgba(184,57,44,.15); color: var(--red); }
+  .feature-card.yellow .icon { background: rgba(230,183,51,.25); color: #8a6c12; }
+  [data-theme="dark"] .feature-card.yellow .icon { color: var(--yellow); }
+  .feature-card h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 24px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .feature-card p { color: var(--ink-soft); font-size: 15px; margin: 0; }
+
+  /* Use photo split */
+  .photo-block { background: var(--card); border-radius: 32px; padding: 0; overflow: hidden; margin-top: 48px; }
+  .photo-block-inner { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+  .photo-block-text { padding: 48px 48px 48px 56px; }
+  .photo-block-photo { aspect-ratio: 4/4; overflow: hidden; }
+  .photo-block-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo-block h3 {
+    font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 38px;
+    margin: 0 0 12px; letter-spacing: -0.015em;
+  }
+  .photo-block h3 em { font-style: italic; color: var(--sage); }
+  .photo-block p { color: var(--ink-soft); font-size: 16px; margin: 0 0 12px; }
+  .uses-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .uses-list span {
+    padding: 6px 12px; background: var(--paper); border: 1px solid var(--rule);
+    border-radius: 999px; font-size: 13px; color: var(--ink); font-weight: 500;
+  }
+
+  /* Sizes */
+  .sizes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+  .size {
+    background: var(--paper); border-radius: 24px;
+    padding: 36px 28px; border: 1px solid var(--rule);
+    display: flex; flex-direction: column; gap: 8px;
+    transition: transform .2s ease;
+  }
+  .size:hover { transform: translateY(-3px); }
+  .size.featured { background: var(--sage); color: var(--paper); border: none; position: relative; }
+  [data-theme="dark"] .size.featured { color: #181612; }
+  .size .qty {
+    font-family: 'Instrument Serif', serif; font-style: italic; font-size: 72px; line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .size .label { font-size: 13px; text-transform: uppercase; letter-spacing: .1em; font-weight: 600; opacity: .85; }
+  .size .desc { font-size: 14.5px; color: var(--ink-soft); margin-top: 12px; }
+  .size.featured .desc { color: currentColor; opacity: .85; }
+  .size .pin {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--yellow); color: #1a1612;
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  }
+
+  /* CTA card */
+  .cta-card {
+    background: var(--terracotta); color: var(--paper); border-radius: 32px;
+    padding: 64px 56px; margin: 96px 0;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center;
+  }
+  [data-theme="dark"] .cta-card { color: #181612; }
+  .cta-card h2 { color: currentColor; }
+  .cta-card h2 em { color: currentColor; font-style: italic; opacity: .85; }
+  .cta-card p { color: currentColor; opacity: .9; font-size: 17px; margin: 0 0 20px; max-width: 40ch; }
+  .cta-card .btn-light { background: var(--paper); color: var(--ink); }
+
+  /* Footer */
+  footer { padding: 56px 0 32px; border-top: 1px solid var(--rule); background: var(--paper); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+  .foot-grid h4 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 20px; margin: 0 0 14px; }
+  .foot-grid a { display: block; color: var(--ink-soft); text-decoration: none; padding: 4px 0; font-size: 14px; }
+  .foot-grid a:hover { color: var(--ink); }
+  .foot-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; margin-top: 40px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--ink-soft); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .story-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .photo-block-inner { grid-template-columns: 1fr; }
+    .photo-block-text { padding: 36px; }
+    .sizes-grid { grid-template-columns: 1fr; }
+    .cta-card { grid-template-columns: 1fr; padding: 40px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    nav.links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand">
+      <span class="brand-mark">c</span>
+      <span class="brand-name">Chubby's</span>
+    </a>
+    <nav class="links">
+      <a href="#story">The Story</a>
+      <a href="#features">The Pencil</a>
+      <a href="#uses">Uses</a>
+      <a href="#sizes">Sizes</a>
+    </nav>
+    <div class="theme-toggle">
+      <button data-mode="light" class="active">☀ Day</button>
+      <button data-mode="dark">☾ Night</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-eyebrow"><span class="leaf"></span>100% Recycled Plastic · 0 Trees</span>
+        <h1>Made from what was <em>already here.</em></h1>
+        <p class="lede">A magnetic carpenter pencil with a built-in level — moulded entirely from recycled plastic. The first of its kind, made for the trade and kind to the planet.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#sizes">Pick a pack →</a>
+          <a class="btn btn-ghost" href="#story">Read the story</a>
+        </div>
+      </div>
+      <div class="hero-collage">
+        <div class="photo"><img src="assets/pencil-hero.png" alt="Chubby's carpenter pencil with level and ruler markings" /></div>
+        <div class="sticker">No trees<br /><em>harmed.</em></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="strip">
+  <div class="strip-track">
+    <span><span>100% Recycled Plastic</span><span class="dot"></span><span>3× Longer Lead</span><span class="dot"></span><span>Made for the Trade</span><span class="dot"></span><span>Integrated Magnet</span><span class="dot"></span><span>Recyclable Again</span><span class="dot"></span></span>
+    <span><span>100% Recycled Plastic</span><span class="dot"></span><span>3× Longer Lead</span><span class="dot"></span><span>Made for the Trade</span><span class="dot"></span><span>Integrated Magnet</span><span class="dot"></span><span>Recyclable Again</span><span class="dot"></span></span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section id="story">
+    <span class="eyebrow">◐ The Recycled Story</span>
+    <h2>One pencil, <em>two lives lived.</em></h2>
+    <p class="section-lede">Before it was a pencil, it was something else entirely. Here's how a yogurt tub turns into the most reliable tool in your pouch.</p>
+
+    <div class="story-grid">
+      <div class="story-card">
+        <div class="step">i.</div>
+        <h3>Collected</h3>
+        <p>Post-consumer plastic — bottles, tubs, lids — recovered from the recycling stream before it heads anywhere worse.</p>
+      </div>
+      <div class="story-card accent">
+        <div class="step">ii.</div>
+        <h3>Re-formed</h3>
+        <p>Cleaned, shredded, and moulded into a carpenter pencil body. No virgin plastic added. No trees felled.</p>
+      </div>
+      <div class="story-card">
+        <div class="step">iii.</div>
+        <h3>On the job</h3>
+        <p>Sharpened, used, lent, lost, found, and at the end of its working life — recyclable all over again.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <span class="eyebrow">◐ The Pencil</span>
+    <h2>Four reasons it earns its <em>spot on the belt.</em></h2>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon">↻</div>
+        <div>
+          <h3>100% recycled plastic</h3>
+          <p>Every body is moulded from material that already had one life. We don't make new plastic. We don't cut trees.</p>
+        </div>
+      </div>
+      <div class="feature-card warm">
+        <div class="icon">◉</div>
+        <div>
+          <h3>Integrated magnet</h3>
+          <p>Snaps to scaffold, joist hangers, steel framing. The pencil stays where you left it — even on the third storey.</p>
+        </div>
+      </div>
+      <div class="feature-card red">
+        <div class="icon">✦</div>
+        <div>
+          <h3>Real graphite, 3× the life</h3>
+          <p>Not pressed lead. Marks cleaner on rough timber and lasts three times longer between sharpenings.</p>
+        </div>
+      </div>
+      <div class="feature-card yellow">
+        <div class="icon">◢</div>
+        <div>
+          <h3>Built for tight corners</h3>
+          <p>Slim enough for soffit work where torpedo levels won't go. The original mason's pencil, since adopted by everyone else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="uses">
+    <span class="eyebrow">◐ On the Jobsite</span>
+    <h2>One pencil. <em>Every trade.</em></h2>
+    <p class="section-lede">It was designed for masons. Now it's in every pouch on the site.</p>
+
+    <div class="photo-block">
+      <div class="photo-block-inner">
+        <div class="photo-block-text">
+          <h3>From soffits to <em>switchplates.</em></h3>
+          <p>Carpenters use it for finish work. Tilers level ceramic with it. Electricians install boxes, outlets and fixtures. Masons get into corners no torpedo level can reach.</p>
+          <p>It is, simply, the pencil that does it all.</p>
+          <div class="uses-list">
+            <span>Carpentry</span>
+            <span>Masonry</span>
+            <span>Tile setting</span>
+            <span>Electrical</span>
+            <span>Drywall</span>
+            <span>Framing</span>
+            <span>Finish work</span>
+            <span>Stringers</span>
+          </div>
+        </div>
+        <div class="photo-block-photo">
+          <img src="assets/pencil-square.png" alt="Carpenter using Chubby's pencil with a steel square" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sizes">
+    <span class="eyebrow">◐ Sizes &amp; Packs</span>
+    <h2>Pick a pack. <em>We'll take it from there.</em></h2>
+    <p class="section-lede">Available in 7-inch and 9-inch lengths.</p>
+
+    <div class="sizes-grid">
+      <div class="size">
+        <div class="label">Single</div>
+        <div class="qty">1</div>
+        <div class="desc">Try one first. Pick a length. Decide.</div>
+      </div>
+      <div class="size featured">
+        <span class="pin">Most Loved</span>
+        <div class="label">Convenient</div>
+        <div class="qty">10</div>
+        <div class="desc">One for the truck, one for the belt, eight to share or lose.</div>
+      </div>
+      <div class="size">
+        <div class="label">Site Box</div>
+        <div class="qty">100</div>
+        <div class="desc">For crews, contractors and tool suppliers. Stock the whole site.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-card">
+    <div>
+      <h2>A small tool, a <em>small promise.</em></h2>
+      <p>Every Chubby's pencil keeps a little plastic out of where it shouldn't be. Multiply that by every framer on every site, and it starts to add up.</p>
+    </div>
+    <div>
+      <a class="btn btn-light" href="#sizes">Shop the pencil →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="brand" style="margin-bottom: 16px;">
+          <span class="brand-mark">c</span>
+          <span class="brand-name">Chubby's</span>
+        </a>
+        <p style="color:var(--ink-soft); font-size: 14px; margin-top: 16px; max-width: 32ch;">A small company making a small thing carefully, in 100% recycled plastic.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="#">Singles</a>
+        <a href="#">10-pack</a>
+        <a href="#">Site box</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">Our story</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Press</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="#">hello@chubbytools.com</a>
+        <a href="#">Wholesale</a>
+        <a href="#">Find a stockist</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Chubby Tools · Made from what was already here.</span>
+      <span style="color: var(--sage); font-weight: 600;">◐ 100% Recyclable</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const saved = localStorage.getItem('chubby-theme-03');
+  if (saved) root.setAttribute('data-theme', saved);
+  const btns = document.querySelectorAll('.theme-toggle button');
+  const sync = () => {
+    const cur = root.getAttribute('data-theme') || 'light';
+    btns.forEach(b => b.classList.toggle('active', b.dataset.mode === cur));
+  };
+  sync();
+  btns.forEach(b => b.addEventListener('click', () => {
+    root.setAttribute('data-theme', b.dataset.mode);
+    localStorage.setItem('chubby-theme-03', b.dataset.mode);
+    sync();
+  }));
+</script>
+
+</body>
+</html>

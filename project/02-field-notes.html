@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<title>Chubby's — Field Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fafaf6;
+    --paper: #ffffff;
+    --ink: #1c1a17;
+    --ink-soft: #6b6661;
+    --rule: #e2ddd2;
+    --red: #b8232c;
+    --yellow: #e8b910;
+    --accent-warm: #c47a4a;
+  }
+  [data-theme="dark"] {
+    --bg: #14130f;
+    --paper: #1c1a17;
+    --ink: #f1ede4;
+    --ink-soft: #a39e95;
+    --rule: #322f29;
+    --red: #e8434d;
+    --yellow: #f5c518;
+    --accent-warm: #d99466;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    transition: background .35s ease, color .35s ease;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+
+  /* Header */
+  header {
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 20;
+  }
+  .nav {
+    display: grid; grid-template-columns: auto 1fr auto auto;
+    align-items: center; gap: 40px; padding: 18px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-mark {
+    width: 32px; height: 32px; background: var(--yellow);
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 16px; color: #1a1612;
+    border: 1.5px solid var(--red);
+  }
+  .brand-name {
+    font-family: 'Source Serif 4', serif; font-size: 18px; font-weight: 500; letter-spacing: -0.01em;
+  }
+  .nav-meta { color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  nav.links { display: flex; gap: 28px; }
+  nav.links a { color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 500; }
+  nav.links a:hover { color: var(--red); }
+
+  /* Theme toggle */
+  .theme-toggle {
+    display: inline-flex; gap: 0; border: 1px solid var(--rule); border-radius: 0;
+    padding: 0; background: transparent;
+  }
+  .theme-toggle button {
+    background: transparent; border: none; color: var(--ink-soft);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .08em;
+    padding: 7px 10px; cursor: pointer; text-transform: uppercase;
+  }
+  .theme-toggle button.active { background: var(--ink); color: var(--bg); }
+
+  /* Masthead */
+  .masthead { padding: 64px 0 40px; border-bottom: 1px solid var(--rule); }
+  .masthead-grid { display: grid; grid-template-columns: 1fr 220px; gap: 56px; align-items: end; }
+  .issue {
+    font-family: 'Source Serif 4', serif; font-style: italic;
+    font-size: 16px; color: var(--ink-soft); margin-bottom: 16px;
+  }
+  .masthead h1 {
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    font-size: clamp(56px, 8vw, 116px); line-height: .94;
+    letter-spacing: -0.035em; margin: 0;
+    text-wrap: balance;
+  }
+  .masthead h1 em { font-style: italic; color: var(--red); }
+  .masthead-meta {
+    border-top: 1px solid var(--ink); padding-top: 14px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase; line-height: 1.7;
+  }
+  .masthead-meta span { display: block; color: var(--ink-soft); }
+  .masthead-meta strong { color: var(--ink); font-weight: 500; }
+
+  /* Hero photo */
+  .hero-photo {
+    margin-top: 48px;
+    aspect-ratio: 16/7;
+    border-radius: 0; overflow: hidden;
+    position: relative;
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-caption {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 12px; font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule); padding-bottom: 12px;
+  }
+
+  /* Lede paragraph */
+  .lede-section {
+    padding: 80px 0; border-bottom: 1px solid var(--rule);
+  }
+  .lede-grid { display: grid; grid-template-columns: 220px 1fr; gap: 64px; }
+  .lede-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--red);
+    border-top: 2px solid var(--red); padding-top: 12px;
+  }
+  .lede-body {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(22px, 2.4vw, 30px); line-height: 1.4;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    max-width: 28ch;
+  }
+  .lede-body::first-letter {
+    font-family: 'Source Serif 4', serif;
+    font-size: 88px; line-height: .85; float: left;
+    padding: 8px 14px 0 0; color: var(--red); font-weight: 500;
+  }
+
+  /* Three-column features (newspaper style) */
+  .features { padding: 80px 0; border-bottom: 1px solid var(--rule); }
+  .features-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 48px; border-bottom: 1px solid var(--ink); padding-bottom: 12px; }
+  .features-head h2 {
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    font-size: clamp(36px, 4vw, 52px); letter-spacing: -0.02em; margin: 0;
+  }
+  .features-head h2 em { font-style: italic; color: var(--red); }
+  .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .feature h3 {
+    font-family: 'Source Serif 4', serif; font-weight: 500;
+    font-size: 22px; letter-spacing: -0.01em; margin: 12px 0 8px;
+  }
+  .feature p { font-size: 14.5px; color: var(--ink-soft); margin: 0; line-height: 1.55; }
+  .feature .num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--red); letter-spacing: .1em;
+  }
+
+  /* Long-form double column */
+  .article { padding: 96px 0; border-bottom: 1px solid var(--rule); }
+  .article-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .article-photo { aspect-ratio: 4/5; overflow: hidden; }
+  .article-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .article-text { padding-top: 24px; }
+  .article-text .kicker {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--red);
+    margin-bottom: 16px;
+  }
+  .article-text h2 {
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    font-size: clamp(36px, 4vw, 52px); line-height: 1.05;
+    letter-spacing: -0.025em; margin: 0 0 24px;
+  }
+  .article-text h2 em { font-style: italic; color: var(--red); }
+  .article-text p { font-family: 'Source Serif 4', serif; font-size: 18px; line-height: 1.6; color: var(--ink); margin: 0 0 16px; max-width: 50ch; }
+  .article-text p.small { font-size: 14px; color: var(--ink-soft); font-family: 'IBM Plex Sans', sans-serif; }
+
+  /* Sizes catalog */
+  .catalog { padding: 80px 0; border-bottom: 1px solid var(--rule); }
+  .catalog h2 {
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    font-size: clamp(36px, 4vw, 52px); letter-spacing: -0.02em; margin: 0 0 36px;
+  }
+  .catalog h2 em { font-style: italic; color: var(--red); }
+  table.catalog-table { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; }
+  table.catalog-table th {
+    text-align: left; font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 500;
+    padding: 14px 0; border-bottom: 2px solid var(--ink);
+  }
+  table.catalog-table td {
+    padding: 22px 0; border-bottom: 1px solid var(--rule); vertical-align: top;
+  }
+  table.catalog-table td.qty { font-family: 'Source Serif 4', serif; font-size: 32px; letter-spacing: -0.02em; width: 120px; }
+  table.catalog-table td.name { font-family: 'Source Serif 4', serif; font-size: 22px; width: 200px; }
+  table.catalog-table td.desc { color: var(--ink-soft); font-size: 15px; }
+  table.catalog-table td.cta { text-align: right; width: 140px; }
+  table.catalog-table td.cta a {
+    display: inline-block; padding: 8px 14px;
+    border: 1px solid var(--ink); color: var(--ink); text-decoration: none;
+    font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em;
+  }
+  table.catalog-table td.cta a:hover { background: var(--ink); color: var(--bg); }
+
+  /* Pledge */
+  .pledge {
+    padding: 80px 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  .pledge-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .pledge h2 {
+    font-family: 'Source Serif 4', serif; font-weight: 400; font-style: italic;
+    font-size: clamp(34px, 4vw, 52px); line-height: 1.1; letter-spacing: -0.02em; margin: 0;
+  }
+  .pledge p { font-family: 'Source Serif 4', serif; font-size: 18px; color: var(--ink-soft); margin: 0; }
+  .pledge .stamp {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 18px; padding: 8px 14px;
+    border: 1.5px solid var(--red); color: var(--red);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  }
+
+  /* Footer */
+  footer { padding: 56px 0 32px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: end; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+  .foot-top h3 { font-family: 'Source Serif 4', serif; font-style: italic; font-weight: 400; font-size: 32px; letter-spacing: -0.02em; margin: 0; max-width: 14ch; }
+  .foot-bottom { display: flex; justify-content: space-between; padding-top: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+
+  @media (max-width: 900px) {
+    .masthead-grid { grid-template-columns: 1fr; }
+    .lede-grid { grid-template-columns: 1fr; gap: 24px; }
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .article-grid { grid-template-columns: 1fr; }
+    .pledge-inner { grid-template-columns: 1fr; gap: 24px; }
+    nav.links, .nav-meta { display: none; }
+    table.catalog-table td.qty { font-size: 22px; width: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand">
+      <span class="brand-mark">C</span>
+      <span class="brand-name">Chubby's</span>
+    </a>
+    <div class="nav-meta">Vol. I · Carpenter Pencils · Est. on the level</div>
+    <nav class="links">
+      <a href="#story">Story</a>
+      <a href="#tools">The Tool</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button data-mode="light" class="active">Day</button>
+      <button data-mode="dark">Night</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="masthead">
+    <div class="masthead-grid">
+      <div>
+        <div class="issue">No. 01 — Field Notes from the Workshop</div>
+        <h1>A pencil that earned its <em>place on the belt.</em></h1>
+      </div>
+      <div class="masthead-meta">
+        <span>Made from</span><strong>100% recycled plastic</strong>
+        <span style="margin-top:10px; display:block;">Originally for</span><strong>Masonry &amp; soffit work</strong>
+        <span style="margin-top:10px; display:block;">Now used by</span><strong>The whole jobsite</strong>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <img src="assets/pencil-hero.png" alt="Chubby's carpenter pencil with integrated level on a wooden surface" />
+    </div>
+    <div class="hero-caption">
+      <span>Fig. 01 — The 9-inch, with bubble level &amp; ruler.</span>
+      <span>Photograph: workshop floor, morning light.</span>
+    </div>
+  </section>
+
+  <section class="lede-section">
+    <div class="lede-grid">
+      <div class="lede-label">A Note from the Bench</div>
+      <p class="lede-body">It started as a small thing — a carpenter pencil that fit where torpedo levels couldn't, and didn't get lost. Then we noticed how many were ending up in the bin. So we made it again, this time entirely from plastic that had already done its work somewhere else.</p>
+    </div>
+  </section>
+
+  <section class="features" id="tools">
+    <div class="features-head">
+      <h2>Four small things, <em>done well.</em></h2>
+      <span class="mono" style="color:var(--ink-soft)">Spec sheet · 01–04</span>
+    </div>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="num">01 — Material</div>
+        <h3>Made of recycled plastic</h3>
+        <p>The first carpenter pencil moulded from 100% recycled plastic. No virgin material. No trees.</p>
+      </div>
+      <div class="feature">
+        <div class="num">02 — Magnet</div>
+        <h3>Stays where you leave it</h3>
+        <p>Integrated magnet snaps to steel scaffold, joist hangers, or the side of your toolbox.</p>
+      </div>
+      <div class="feature">
+        <div class="num">03 — Lead</div>
+        <h3>Graphite, 3× lifespan</h3>
+        <p>Real graphite — not pressed lead — lasts three times as long and marks cleaner on rough surfaces.</p>
+      </div>
+      <div class="feature">
+        <div class="num">04 — Form</div>
+        <h3>Fits the tight corners</h3>
+        <p>Designed around soffit work where torpedo levels won't fit. Now the favourite of every tile setter we know.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="article" id="story">
+    <div class="article-grid">
+      <div class="article-photo">
+        <img src="assets/pencil-hand.png" alt="A carpenter marking timber with a Chubby's pencil" />
+      </div>
+      <div class="article-text">
+        <div class="kicker">Feature · The Recycled Story</div>
+        <h2>Built from what was <em>already here.</em></h2>
+        <p>We didn't set out to make a sustainable pencil. We set out to make a better one. The recycled plastic came later, when we realised the trade's most-thrown-away tool didn't have to be made from anything new.</p>
+        <p>Now every Chubby's pencil starts as something else — a milk jug, a yogurt tub, a takeaway lid — and ends as the most reliable thing in your pouch.</p>
+        <p class="small">Our pencils are FSC-labelled because the graphite is wood-encased; the body itself contains zero virgin material.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="article">
+    <div class="article-grid">
+      <div class="article-text" style="order:1">
+        <div class="kicker">Field Use · Who uses it</div>
+        <h2>Carpenters love them. <em>So does everyone else.</em></h2>
+        <p>It was meant for masons. Then carpenters levelled stringers with it. Then tilers used it to mark ceramic. Then electricians installed boxes with one in their teeth. Then we stopped being surprised.</p>
+        <p>It turns out the smallest tool on the jobsite is also the most universal. Who knew.</p>
+      </div>
+      <div class="article-photo" style="order:2">
+        <img src="assets/pencil-square.png" alt="Marking timber with a carpenter pencil and steel square" />
+      </div>
+    </div>
+  </section>
+
+  <section class="catalog" id="sizes">
+    <h2>The <em>catalog.</em></h2>
+    <table class="catalog-table">
+      <thead>
+        <tr><th>Pack</th><th>Name</th><th>For</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="qty">01</td>
+          <td class="name">Single pencil</td>
+          <td class="desc">Available in 7-inch and 9-inch. Try one. Decide for yourself.</td>
+          <td class="cta"><a href="#">Buy →</a></td>
+        </tr>
+        <tr>
+          <td class="qty">10</td>
+          <td class="name">The 10-pack</td>
+          <td class="desc">For the working tradesman. Lasts about a season. Lose half. Find some.</td>
+          <td class="cta"><a href="#">Buy →</a></td>
+        </tr>
+        <tr>
+          <td class="qty">100</td>
+          <td class="name">Site box</td>
+          <td class="desc">For crews, contractors, and tool suppliers. Issued by the box, not the pencil.</td>
+          <td class="cta"><a href="#">Buy →</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<section class="pledge">
+  <div class="wrap pledge-inner">
+    <h2>"No trees were hurt in the making of this pencil."</h2>
+    <div>
+      <p>Every Chubby's pencil is moulded from 100% recycled plastic — and recyclable again when its working life is done.</p>
+      <span class="stamp">◐ Certified Tree-Free</span>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-top">
+      <h3>Drop us a line. We'll send pencils.</h3>
+      <a href="#" class="mono" style="color:var(--red); text-decoration:none; border-bottom:1px solid var(--red); padding-bottom:2px;">hello@chubbytools.com →</a>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Chubby Tools</span>
+      <span>Made from what was already here.</span>
+      <span>Vol. I · No. 01</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const saved = localStorage.getItem('chubby-theme-02');
+  if (saved) root.setAttribute('data-theme', saved);
+  const btns = document.querySelectorAll('.theme-toggle button');
+  const sync = () => {
+    const cur = root.getAttribute('data-theme') || 'light';
+    btns.forEach(b => b.classList.toggle('active', b.dataset.mode === cur));
+  };
+  sync();
+  btns.forEach(b => b.addEventListener('click', () => {
+    root.setAttribute('data-theme', b.dataset.mode);
+    localStorage.setItem('chubby-theme-02', b.dataset.mode);
+    sync();
+  }));
+</script>
+
+</body>
+</html>

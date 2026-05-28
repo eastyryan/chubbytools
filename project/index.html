@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Chubby's — Five Landing Page Directions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3ede1;
+    --paper: #faf5e9;
+    --ink: #2a2520;
+    --ink-soft: #6e6555;
+    --rule: #d9cdb8;
+    --red: #c8202b;
+    --yellow: #f5c518;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+
+  header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .head-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px; height: 44px;
+    background: var(--yellow); border: 2px solid var(--red);
+    display: grid; place-items: center; font-weight: 800;
+    font-size: 18px; color: #1a1612;
+  }
+  .brand-name { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+  .brand-name em { font-style: italic; color: var(--ink-soft); font-weight: 400; }
+
+  .intro { padding: 64px 0 48px; }
+  .intro h1 {
+    font-family: 'Newsreader', serif; font-weight: 400;
+    font-size: clamp(40px, 5.5vw, 68px); line-height: 1.05; letter-spacing: -0.02em;
+    margin: 16px 0 16px; text-wrap: balance; max-width: 18ch;
+  }
+  .intro h1 em { font-style: italic; color: var(--red); }
+  .intro p {
+    font-size: 18px; color: var(--ink-soft);
+    max-width: 56ch; margin: 0;
+  }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; padding: 24px 0 96px;
+  }
+
+  .card {
+    background: var(--paper); border: 1px solid var(--rule);
+    text-decoration: none; color: var(--ink);
+    display: flex; flex-direction: column;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--red);
+    box-shadow: 0 30px 50px -30px rgba(60,40,20,.3);
+  }
+  .card .preview {
+    height: 240px; padding: 24px;
+    display: flex; align-items: end; justify-content: space-between; gap: 16px;
+    border-bottom: 1px solid var(--rule);
+    position: relative; overflow: hidden;
+  }
+  .card .preview .preview-title {
+    font-size: clamp(36px, 4vw, 52px); line-height: 1.02; letter-spacing: -0.025em;
+    max-width: 11ch; text-wrap: balance;
+  }
+  .card .preview .preview-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 2px;
+    align-self: flex-start; position: absolute; top: 20px; left: 20px;
+  }
+  .card .body { padding: 24px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card .body .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .08em; color: var(--red); }
+  .card .body h3 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 28px; letter-spacing: -0.01em; margin: 0; }
+  .card .body p { font-size: 15px; color: var(--ink-soft); margin: 4px 0 0; }
+  .card .body .meta {
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px dashed var(--rule);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .card .body .meta .arrow { color: var(--red); font-size: 18px; }
+
+  /* Per-card preview themes */
+  .card.c1 .preview { background: #fbf6ec; color: #2a2520; font-family: 'Newsreader', serif; }
+  .card.c1 .preview-title em { font-style: italic; color: #c8202b; }
+  .card.c1 .preview .preview-tag { background: #c8202b; color: #fbf6ec; }
+
+  .card.c2 .preview { background: #ffffff; color: #1c1a17; font-family: 'Newsreader', serif; }
+  .card.c2 .preview-title em { font-style: italic; color: #b8232c; }
+  .card.c2 .preview .preview-tag { background: #1c1a17; color: #fff; }
+
+  .card.c3 .preview { background: #f3ede1; color: #2b2a23; font-family: 'Newsreader', serif; }
+  .card.c3 .preview-title em { font-style: italic; color: #5a7548; }
+  .card.c3 .preview .preview-tag { background: #5a7548; color: #faf5ea; }
+
+  .card.c4 .preview { background: #1f1d18; color: #faf6eb; font-family: 'Geist', sans-serif; font-weight: 800; }
+  .card.c4 .preview-title { letter-spacing: -0.035em; }
+  .card.c4 .preview-title em { font-style: normal; background: #f5c518; color: #1f1d18; padding: 0 6px; box-shadow: -3px 3px 0 #c52232; }
+  .card.c4 .preview .preview-tag { background: #f5c518; color: #1f1d18; }
+
+  .card.c5 .preview { background: #f1e8d3; color: #2a2118; font-family: 'EB Garamond', serif; font-style: italic; }
+  .card.c5 .preview-title em { color: #a43329; }
+  .card.c5 .preview .preview-tag { background: #a43329; color: #f1e8d3; font-style: normal; }
+
+  /* Notes */
+  .notes {
+    margin: 32px 0 96px;
+    padding: 28px 32px;
+    background: var(--paper); border: 1px solid var(--rule);
+    display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start;
+  }
+  .notes .icon {
+    width: 36px; height: 36px;
+    background: var(--yellow); border: 2px solid var(--red);
+    display: grid; place-items: center; font-weight: 800; color: #1a1612;
+    flex-shrink: 0;
+  }
+  .notes h4 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 20px; margin: 0 0 6px; }
+  .notes p { color: var(--ink-soft); font-size: 15px; margin: 0; max-width: 70ch; }
+
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; }
+    .card .preview { height: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap head-row">
+    <div class="brand">
+      <span class="brand-mark">C</span>
+      <span class="brand-name">Chubby's <em>Carpenter Pencils</em></span>
+    </div>
+    <span class="mono">5 Landing Directions · Light/Dark · 2026.05</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="intro">
+    <span class="mono" style="color: var(--red); font-weight: 600;">— For your review</span>
+    <h1>Five quiet ways to introduce <em>a small, recyclable tool.</em></h1>
+    <p>Each landing page below is its own complete design — full sections, copy, light &amp; dark mode toggle in the header. Click in to view; use browser back to return.</p>
+  </section>
+
+  <div class="grid">
+
+    <a class="card c1" href="01-workbench.html">
+      <div class="preview">
+        <span class="preview-tag">01 · Workbench</span>
+        <span class="preview-title">Never met <em>a tree.</em></span>
+      </div>
+      <div class="body">
+        <span class="num">01 — Workbench</span>
+        <h3>Warm cream &amp; serif</h3>
+        <p>Editorial workshop tone — cream background, Newsreader serif headlines, soft red &amp; yellow accents. The pencil presented like a well-made object.</p>
+        <div class="meta"><span>Newsreader · Geist</span><span class="arrow">→</span></div>
+      </div>
+    </a>
+
+    <a class="card c2" href="02-field-notes.html">
+      <div class="preview">
+        <span class="preview-tag">02 · Field Notes</span>
+        <span class="preview-title">A pencil that earned its <em>place.</em></span>
+      </div>
+      <div class="body">
+        <span class="num">02 — Field Notes</span>
+        <h3>Editorial magazine</h3>
+        <p>Newspaper-style masthead, thin rules, full-bleed hero photo, drop caps and footnotes. Quietly confident, lots of white space.</p>
+        <div class="meta"><span>Source Serif · IBM Plex</span><span class="arrow">→</span></div>
+      </div>
+    </a>
+
+    <a class="card c3" href="03-recycled.html">
+      <div class="preview">
+        <span class="preview-tag">03 · Recycled</span>
+        <span class="preview-title">Already <em>here.</em></span>
+      </div>
+      <div class="body">
+        <span class="num">03 — Recycled</span>
+        <h3>Earthy &amp; friendly</h3>
+        <p>Sage-green sustainability accent alongside the brand yellow/red. Rounded cards, a "tree-free" sticker, and the recycling story told as three steps.</p>
+        <div class="meta"><span>Instrument · Manrope</span><span class="arrow">→</span></div>
+      </div>
+    </a>
+
+    <a class="card c4" href="04-trade-tag.html">
+      <div class="preview">
+        <span class="preview-tag">04 · Trade Tag</span>
+        <span class="preview-title">Built like <em>a tool.</em></span>
+      </div>
+      <div class="body">
+        <span class="num">04 — Trade Tag</span>
+        <h3>Hardware catalog</h3>
+        <p>The most overtly Chubby's: yellow/red label system, monospace specs, SKU numbers, technical tables. Trade-counter energy, made soft.</p>
+        <div class="meta"><span>Archivo · JetBrains Mono</span><span class="arrow">→</span></div>
+      </div>
+    </a>
+
+    <a class="card c5" href="05-letter.html" style="grid-column: span 2;">
+      <div class="preview" style="height: 260px;">
+        <span class="preview-tag">05 · Letter</span>
+        <span class="preview-title" style="max-width: 24ch;">About a small thing, made <em>carefully.</em></span>
+      </div>
+      <div class="body">
+        <span class="num">05 — Letter</span>
+        <h3>Quiet, type-driven</h3>
+        <p>Reads like a letter from the workshop. Single column, EB Garamond throughout, drop cap, signed off. The least sales-y of the five — closest to "warm and not intimidating."</p>
+        <div class="meta"><span>EB Garamond · Public Sans</span><span class="arrow">→</span></div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="notes">
+    <div class="icon">i</div>
+    <div>
+      <h4>How to choose</h4>
+      <p>If you want the warmest, least-shouty: <strong>05 Letter</strong>. If you want the most overtly branded with your yellow/red: <strong>04 Trade Tag</strong>. If you want the sustainability story up front: <strong>03 Recycled</strong>. If you want editorial polish: <strong>02 Field Notes</strong>. If you want a balanced default: <strong>01 Workbench</strong>. Each one has a light/dark toggle in the header — try both.</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

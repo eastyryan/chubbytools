@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<title>Chubby's Carpenter Pencils — On the Level</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600;6..72,700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f5efe4;
+    --surface: #fbf6ec;
+    --ink: #2a2520;
+    --ink-soft: #6c6055;
+    --rule: #d9cdb8;
+    --red: #c8202b;
+    --yellow: #f5c518;
+    --green: #4a6a3b;
+    --shadow: 0 1px 0 rgba(0,0,0,.04), 0 20px 40px -28px rgba(60,40,20,.25);
+  }
+  [data-theme="dark"] {
+    --bg: #1a1612;
+    --surface: #221d18;
+    --ink: #f1ead9;
+    --ink-soft: #b8ad99;
+    --rule: #3a322a;
+    --red: #e8434d;
+    --yellow: #f5c518;
+    --green: #8ab07a;
+    --shadow: 0 1px 0 rgba(255,255,255,.02), 0 20px 40px -20px rgba(0,0,0,.6);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    transition: background .35s ease, color .35s ease;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: radial-gradient(rgba(0,0,0,.025) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  [data-theme="dark"] body::before,
+  [data-theme="dark"] ::before {
+    background-image: radial-gradient(rgba(255,255,255,.02) 1px, transparent 1px) !important;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  /* Header */
+  header {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    position: sticky; top: 0;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    z-index: 20;
+  }
+  .nav { display: flex; align-items: center; gap: 32px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 6px;
+    background: var(--yellow);
+    border: 2px solid var(--red);
+    display: grid; place-items: center;
+    font-family: 'Geist', sans-serif; font-weight: 800; font-size: 18px; color: #1a1612;
+    letter-spacing: -0.02em;
+  }
+  .brand-name { font-family: 'Newsreader', serif; font-weight: 500; font-size: 20px; letter-spacing: -0.01em; }
+  .brand-name em { font-style: italic; color: var(--ink-soft); font-weight: 400; }
+  nav.links { display: flex; gap: 28px; margin-left: auto; }
+  nav.links a {
+    color: var(--ink-soft); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color .15s ease;
+  }
+  nav.links a:hover { color: var(--ink); }
+
+  /* Theme toggle */
+  .theme-toggle {
+    width: 56px; height: 30px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--rule);
+    position: relative; cursor: pointer; padding: 0;
+    transition: background .25s ease;
+  }
+  .theme-toggle .knob {
+    position: absolute; top: 3px; left: 3px;
+    width: 22px; height: 22px; border-radius: 999px;
+    background: var(--yellow); border: 1px solid var(--red);
+    transition: transform .3s cubic-bezier(.4,1.4,.6,1);
+    display: grid; place-items: center;
+    font-size: 12px;
+  }
+  [data-theme="dark"] .theme-toggle .knob { transform: translateX(26px); background: var(--ink); border-color: var(--rule); color: var(--yellow); }
+
+  /* Hero */
+  .hero { padding: 72px 0 56px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--green); font-weight: 600;
+    padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px;
+    background: var(--surface);
+  }
+  .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .hero h1 {
+    font-family: 'Newsreader', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6vw, 78px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 20px 0 18px;
+    text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; color: var(--red); font-weight: 500; }
+  .hero p.lede {
+    font-size: 18px; color: var(--ink-soft); max-width: 46ch; margin: 0 0 28px;
+  }
+  .cta-row { display: flex; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 22px; border-radius: 6px;
+    font-family: 'Geist', sans-serif; font-weight: 600; font-size: 14px;
+    text-decoration: none; border: 1px solid transparent;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+  .hero-image {
+    position: relative;
+    border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow);
+    aspect-ratio: 4/3;
+  }
+  .hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-image .badge {
+    position: absolute; top: 18px; left: 18px;
+    background: var(--yellow); color: #1a1612;
+    padding: 8px 12px; border-radius: 4px;
+    font-family: 'Geist'; font-weight: 700; font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    border: 2px solid var(--red);
+  }
+
+  /* Pledge band */
+  .pledge {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 32px 0;
+    background: var(--surface);
+  }
+  .pledge-row { display: flex; align-items: center; gap: 24px; justify-content: space-between; flex-wrap: wrap; }
+  .pledge-stat { display: flex; align-items: baseline; gap: 10px; }
+  .pledge-stat .num {
+    font-family: 'Newsreader', serif; font-weight: 500;
+    font-size: 44px; line-height: 1; letter-spacing: -0.02em; color: var(--ink);
+  }
+  .pledge-stat .lbl { font-size: 13px; color: var(--ink-soft); max-width: 22ch; }
+
+  /* Section heading */
+  section { padding: 88px 0; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--red); font-weight: 600; margin-bottom: 12px;
+  }
+  h2 {
+    font-family: 'Newsreader', serif; font-weight: 400;
+    font-size: clamp(34px, 4.4vw, 52px); line-height: 1.08;
+    letter-spacing: -0.02em; margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  h2 em { font-style: italic; color: var(--red); }
+  .section-lede { font-size: 18px; color: var(--ink-soft); max-width: 60ch; }
+
+  /* Features */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1px; background: var(--rule);
+    margin-top: 48px; border: 1px solid var(--rule);
+    border-radius: 8px; overflow: hidden;
+  }
+  .feature {
+    background: var(--surface); padding: 36px 32px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .feature .num {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: 24px; color: var(--red); margin-bottom: 12px;
+  }
+  .feature h3 {
+    font-family: 'Newsreader', serif; font-weight: 500;
+    font-size: 22px; letter-spacing: -0.01em; margin: 0;
+  }
+  .feature p { color: var(--ink-soft); font-size: 15px; margin: 4px 0 0; }
+
+  /* Trades */
+  .trades { background: var(--surface); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .trades-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 40px; align-items: center;
+  }
+  .trades-image { aspect-ratio: 4/3; border-radius: 8px; overflow: hidden; }
+  .trades-image img { width: 100%; height: 100%; object-fit: cover; }
+  .trades ol { list-style: none; padding: 0; margin: 0; }
+  .trades ol li {
+    display: flex; gap: 18px; align-items: baseline;
+    padding: 18px 0; border-bottom: 1px solid var(--rule);
+  }
+  .trades ol li:last-child { border-bottom: none; }
+  .trades ol li .idx {
+    font-family: 'Newsreader', serif; font-style: italic;
+    color: var(--red); font-size: 18px; width: 28px;
+  }
+  .trades ol li .name { font-family: 'Newsreader', serif; font-size: 22px; }
+  .trades ol li .desc { color: var(--ink-soft); font-size: 14px; margin-left: auto; max-width: 30ch; text-align: right; }
+
+  /* Sizes */
+  .sizes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+  .size-card {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+    padding: 28px; display: flex; flex-direction: column; gap: 8px;
+    position: relative; overflow: hidden;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .size-card:hover { transform: translateY(-3px); border-color: var(--red); }
+  .size-card .qty { font-family: 'Newsreader', serif; font-size: 48px; line-height: 1; letter-spacing: -0.02em; }
+  .size-card .qty-sub { font-size: 13px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .1em; }
+  .size-card .desc { color: var(--ink-soft); font-size: 14px; margin-top: 12px; }
+  .size-card .tag {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--yellow); color: #1a1612;
+    padding: 4px 8px; border-radius: 3px;
+    font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  }
+
+  /* Footer */
+  footer { padding: 56px 0 40px; border-top: 1px solid var(--rule); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+  .foot-grid h4 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 16px; margin: 0 0 12px; }
+  .foot-grid a { display: block; color: var(--ink-soft); text-decoration: none; padding: 4px 0; font-size: 14px; }
+  .foot-grid a:hover { color: var(--ink); }
+  .foot-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; margin-top: 40px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--ink-soft); }
+  .foot-bottom .eco { display: inline-flex; align-items: center; gap: 8px; color: var(--green); font-weight: 500; }
+  .foot-bottom .eco .leaf { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 36px; padding: 48px 0; }
+    .features-grid { grid-template-columns: 1fr; }
+    .trades-list { grid-template-columns: 1fr; }
+    .sizes-grid { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr; }
+    nav.links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand">
+      <span class="brand-mark">C</span>
+      <span class="brand-name">Chubby's <em>Carpenter Pencils</em></span>
+    </a>
+    <nav class="links">
+      <a href="#product">The Pencil</a>
+      <a href="#trades">Who's it for</a>
+      <a href="#sizes">Sizes</a>
+      <a href="#story">Our Story</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="knob">☀</span>
+    </button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div>
+      <span class="hero-eyebrow"><span class="dot"></span>100% Recycled Plastic</span>
+      <h1>The carpenter pencil that <em>never met a tree.</em></h1>
+      <p class="lede">A magnetic, level-equipped pencil built for the tight corners of real construction. Made entirely from recycled plastic — the first of its kind.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#sizes">Shop the pencil →</a>
+        <a class="btn btn-ghost" href="#story">Why recycled?</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <span class="badge">On the Level</span>
+      <img src="assets/pencil-hero.png" alt="Chubby's carpenter pencil with integrated level on a workbench" />
+    </div>
+  </section>
+
+</div>
+
+<div class="pledge">
+  <div class="wrap pledge-row">
+    <div class="pledge-stat"><div class="num">100%</div><div class="lbl">recycled plastic. No trees harvested.</div></div>
+    <div class="pledge-stat"><div class="num">3×</div><div class="lbl">longer-lasting graphite versus standard lead.</div></div>
+    <div class="pledge-stat"><div class="num">7″ &amp; 9″</div><div class="lbl">two lengths, three pack sizes.</div></div>
+    <div class="pledge-stat"><div class="num">∞</div><div class="lbl">jobs, from masonry to electrical.</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section id="product">
+    <div class="eyebrow">The Pencil</div>
+    <h2>Small details that make a <em>big difference</em> on site.</h2>
+    <p class="section-lede">Every Chubby's pencil is designed around the actual moments carpenters, masons, and electricians live in — tight corners, awkward angles, and lost pencils.</p>
+
+    <div class="features-grid">
+      <div class="feature">
+        <div class="num">01</div>
+        <h3>Recycled, not replanted</h3>
+        <p>Every pencil body is moulded from 100% recycled plastic. No virgin material, no felled timber. A first for the trade.</p>
+      </div>
+      <div class="feature">
+        <div class="num">02</div>
+        <h3>Integrated magnet</h3>
+        <p>Snaps to steel components, scaffold, or the side of your tool belt. The pencil stays where you left it — even on a roof.</p>
+      </div>
+      <div class="feature">
+        <div class="num">03</div>
+        <h3>Graphite lead, 3× the life</h3>
+        <p>We use real graphite, not pressed lead. It marks cleaner, sharpens easier, and lasts three times longer.</p>
+      </div>
+      <div class="feature">
+        <div class="num">04</div>
+        <h3>Built for tight corners</h3>
+        <p>Originally designed for masons working near soffits — fits where your torpedo level can't. Then carpenters got hold of it.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="trades" id="trades">
+  <div class="wrap">
+    <div class="eyebrow">Who's it for</div>
+    <h2>The trades have spoken — and they keep <em>asking for more</em>.</h2>
+
+    <div class="trades-list">
+      <div class="trades-image"><img src="assets/pencil-hand.png" alt="Carpenter marking timber with Chubby's pencil" /></div>
+      <ol>
+        <li><span class="idx">i.</span><span class="name">Carpenters</span><span class="desc">Marking, framing, finish work.</span></li>
+        <li><span class="idx">ii.</span><span class="name">Masons</span><span class="desc">Levelling brick and stone in tight corners.</span></li>
+        <li><span class="idx">iii.</span><span class="name">Tilers</span><span class="desc">Marking and levelling ceramic.</span></li>
+        <li><span class="idx">iv.</span><span class="name">Electricians</span><span class="desc">Boxes, outlets, fixtures &amp; conduit runs.</span></li>
+        <li><span class="idx">v.</span><span class="name">Everyone else</span><span class="desc">Stringers, drywall, the odd shopping list.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section id="sizes">
+    <div class="eyebrow">Sizes &amp; Packs</div>
+    <h2>Three ways to keep one in <em>every pouch.</em></h2>
+    <p class="section-lede">Available in 7-inch and 9-inch lengths.</p>
+
+    <div class="sizes-grid">
+      <div class="size-card">
+        <div class="qty">1</div>
+        <div class="qty-sub">Single Pencil</div>
+        <div class="desc">Try one. Pick a length. Slip it on your belt and forget you owned anything else.</div>
+      </div>
+      <div class="size-card">
+        <span class="tag">Most Popular</span>
+        <div class="qty">10</div>
+        <div class="qty-sub">Convenient 10-pack</div>
+        <div class="desc">One for the truck, one for the toolbox, eight to lose with dignity.</div>
+      </div>
+      <div class="size-card">
+        <div class="qty">100</div>
+        <div class="qty-sub">Site Box</div>
+        <div class="desc">For crews and contractors. Issue one to every framer on the schedule.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer id="story">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Chubby's Carpenter Pencils</h4>
+        <p style="color: var(--ink-soft); font-size: 14px; max-width: 38ch;">A small company making a small thing carefully. We believe the smallest tool on the jobsite can still say something about what we leave behind.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="#">Single pencils</a>
+        <a href="#">10-packs</a>
+        <a href="#">100-count site box</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">Our story</a>
+        <a href="#">Sustainability</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 Chubby Tools. Made carefully.</div>
+      <div class="eco"><span class="leaf"></span>100% Recycled · Recyclable Again</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const saved = localStorage.getItem('chubby-theme-01');
+  if (saved) root.setAttribute('data-theme', saved);
+  const knob = document.querySelector('.theme-toggle .knob');
+  const sync = () => { knob.textContent = root.getAttribute('data-theme') === 'dark' ? '☾' : '☀'; };
+  sync();
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('chubby-theme-01', next);
+    sync();
+  });
+</script>
+
+</body>
+</html>
