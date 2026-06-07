@@ -1,17 +1,298 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Chubby's Carpenter Pencils — Spec &amp; Catalog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="The first carpenter pencil made from 100% recycled plastic. Magnetic, level-equipped, graphite-core. Built for the trade." />
-  <meta property="og:title" content="Chubby's Carpenter Pencils" />
-  <meta property="og:description" content="100% recycled plastic. Integrated magnet. 3× graphite life. Made for masons, adopted by every other trade." />
-  <meta property="og:image" content="assets/pencil-hero.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<title>Chubby's Carpenter Pencils — The Ultimate Carpenter Pencil</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Chubby's Carpenter Pencils — FSC-certified wood, integrated bubble level, 3× graphite life. Made for the trade." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eee3;
+    --paper: #faf6eb;
+    --card: #ede7d6;
+    --ink: #1f1d18;
+    --ink-soft: #6b6659;
+    --rule: #d8cfb8;
+    --red: #c52232;
+    --yellow: #f5c518;
+    --yellow-soft: #fce58a;
+    --tag-stitch: #1f1d18;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Archivo', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .micro {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* Header — always dark bg, always light text */
+  header {
+    background: #1a1612; color: #f0eadb;
+    border-bottom: 4px solid var(--yellow);
+    position: sticky; top: 0; z-index: 30;
+  }
+  .nav { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; padding-top: 12px; padding-bottom: 12px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: #f0eadb; text-decoration: none; }
+  .brand img.logo {
+    display: block; height: 44px; width: auto;
+    border: 2px solid #1a1612;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+  }
+  /* Footer-only inline brand tag (kept for the footer copy) */
+  .brand-tag {
+    display: flex; align-items: stretch; height: 36px;
+    border: 2px solid var(--red); background: var(--yellow);
+    color: #1a1612; font-family: 'Archivo', sans-serif; font-weight: 800;
+    overflow: hidden;
+  }
+  .brand-tag .a { padding: 0 10px; display: grid; place-items: center; font-size: 17px; letter-spacing: -0.02em; }
+  .brand-tag .b { padding: 0 8px; display: grid; place-items: center; font-size: 9px; line-height: 1.05; text-align: left; border-left: 2px solid var(--red); }
+  nav.links { display: flex; gap: 24px; justify-content: flex-end; }
+  nav.links a {
+    color: #f0eadb; text-decoration: none;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: .06em; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 2px;
+  }
+  nav.links a:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+  /* Status bar */
+  .status-bar {
+    background: var(--card); border-bottom: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .04em; text-transform: uppercase;
+    padding: 8px 0; color: var(--ink-soft);
+  }
+  .status-row { display: flex; gap: 24px; justify-content: space-between; }
+  .status-row .left, .status-row .right { display: flex; gap: 24px; }
+  .status-row .ok { color: #4a7a3d; }
+
+  /* Hero */
+  .hero { padding: 56px 0 40px; }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: start; }
+  .hero-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+  .hero-meta .sku {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: .04em; color: var(--ink-soft);
+  }
+  .hero-meta .sku .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+  .hero h1 {
+    font-family: 'Archivo', sans-serif; font-weight: 800;
+    font-size: clamp(48px, 6vw, 84px); line-height: .95;
+    letter-spacing: -0.035em; margin: 0 0 20px;
+    text-wrap: balance; text-transform: none;
+  }
+  .hero h1 span.hi {
+    background: var(--yellow); padding: 0 8px; box-shadow: -4px 4px 0 var(--red);
+    display: inline-block; line-height: 1.05;
+  }
+  .hero p.lede { font-size: 18px; color: var(--ink-soft); max-width: 50ch; margin: 0 0 28px; }
+  .cta-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px; border: 2px solid var(--ink); background: var(--ink); color: var(--bg);
+    font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px;
+    letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--bg); }
+
+  /* Hero image with spec callouts */
+  .product-card {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 0; position: relative; overflow: hidden;
+  }
+  .product-photo { aspect-ratio: 4/3; overflow: hidden; position: relative; }
+  .product-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .product-photo .stamp {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--red); color: var(--paper);
+    padding: 6px 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; font-weight: 600;
+  }
+  .product-spec {
+    padding: 18px; border-top: 1px solid var(--rule);
+    background: var(--card);
+  }
+  .product-spec-row {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: .03em; text-transform: uppercase;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .product-spec-row:last-child { border-bottom: none; }
+  .product-spec-row .k { color: var(--ink-soft); }
+  .product-spec-row .v { color: var(--ink); font-weight: 600; }
+
+  /* Sustain Strip */
+  .sus-band {
+    background: var(--yellow); color: #1a1612;
+    border-top: 4px solid var(--red); border-bottom: 4px solid var(--red);
+    padding: 18px 0;
+  }
+  .sus-row {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    font-family: 'Archivo', sans-serif; font-weight: 800;
+    font-size: 18px; letter-spacing: -0.01em;
+    justify-content: space-between; align-items: center;
+  }
+  .sus-row .item { display: inline-flex; align-items: center; gap: 12px; }
+  .sus-row .pill {
+    background: #1a1612; color: var(--yellow);
+    padding: 4px 10px; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Section */
+  section { padding: 80px 0; }
+  .sec-head {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    align-items: end; margin-bottom: 40px;
+    padding-bottom: 16px; border-bottom: 2px solid var(--ink);
+  }
+  .sec-head .left .label { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+  .sec-head h2 {
+    font-family: 'Archivo', sans-serif; font-weight: 800;
+    font-size: clamp(34px, 4.4vw, 56px); line-height: 1; letter-spacing: -0.03em; margin: 0;
+  }
+  .sec-head .right { color: var(--ink-soft); font-size: 15px; max-width: 44ch; }
+
+  /* Feature grid */
+  .feature-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border: 1px solid var(--rule); background: var(--rule);
+    gap: 1px;
+  }
+  .feature {
+    background: var(--paper); padding: 28px 22px;
+    display: flex; flex-direction: column; gap: 10px;
+    min-height: 200px;
+  }
+  .feature .head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 4px;
+  }
+  .feature .head .num {
+    background: var(--ink); color: var(--bg);
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    font-size: 12px; padding: 3px 6px; letter-spacing: .04em;
+  }
+  .feature .head .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .feature h3 {
+    font-family: 'Archivo', sans-serif; font-weight: 700;
+    font-size: 22px; letter-spacing: -0.01em; margin: 0; line-height: 1.1;
+  }
+  .feature p { color: var(--ink-soft); font-size: 14px; margin: 0; line-height: 1.55; }
+  .feature .val {
+    margin-top: auto;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--red); letter-spacing: .04em; font-weight: 600;
+  }
+
+  /* Trades two-col */
+  .trades-block {
+    background: var(--card);
+    margin-top: 32px; padding: 0;
+    border: 1px solid var(--rule);
+  }
+  .trades-grid { display: grid; grid-template-columns: 1.1fr 1fr; align-items: stretch; }
+  .trades-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .trades-list { padding: 36px 36px 28px; }
+  .trades-list h3 { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 28px; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .trades-list .sub { color: var(--ink-soft); font-size: 14px; margin-bottom: 24px; }
+  .trades-list ol { list-style: none; padding: 0; margin: 0; }
+  .trades-list ol li {
+    display: grid; grid-template-columns: 50px 1fr 100px;
+    align-items: center; gap: 16px;
+    padding: 12px 0; border-bottom: 1px dashed var(--rule);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .trades-list ol li:last-child { border-bottom: none; }
+  .trades-list ol li .idx { color: var(--red); font-weight: 600; }
+  .trades-list ol li .who { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .trades-list ol li .use { color: var(--ink-soft); text-align: right; }
+
+  /* Catalog */
+  .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .sku-card {
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 4px;
+    position: relative; overflow: hidden;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .sku-card:hover { transform: translateY(-3px); border-color: var(--red); }
+  .sku-card .tag-band {
+    background: var(--ink); color: var(--bg);
+    padding: 8px 16px; display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  .sku-card .body { padding: 28px 24px; }
+  .sku-card .qty {
+    font-family: 'Archivo', sans-serif; font-weight: 800;
+    font-size: 88px; line-height: 1; letter-spacing: -0.04em; color: var(--ink);
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .sku-card .qty .unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--ink-soft); font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+  }
+  .sku-card .desc { font-size: 14.5px; color: var(--ink-soft); margin: 16px 0 24px; min-height: 60px; }
+  .sku-card .row { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px dashed var(--rule); }
+  .sku-card .row .sku-no { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .04em; color: var(--ink-soft); text-transform: uppercase; }
+  .sku-card .row .add {
+    background: var(--yellow); color: #1a1612;
+    border: 2px solid var(--red); padding: 6px 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    text-decoration: none;
+  }
+  .sku-card.featured { background: var(--card); }
+  .sku-card.featured .tag-band { background: var(--red); }
+
+  /* Footer */
+  footer {
+    background: var(--ink); color: var(--paper);
+    padding: 56px 0 32px;
+  }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+  .foot-grid h4 { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--yellow); margin: 0 0 14px; }
+  .foot-grid a { display: block; color: rgba(240,234,219,.7); text-decoration: none; padding: 4px 0; font-size: 14px; }
+  .foot-grid a:hover { color: var(--paper); }
+  .foot-bottom { display: flex; justify-content: space-between; padding-top: 32px; margin-top: 40px; border-top: 1px solid rgba(255,255,255,.1); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: rgba(240,234,219,.5); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .trades-grid { grid-template-columns: 1fr; }
+    .catalog-grid { grid-template-columns: 1fr; }
+    .sec-head { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    nav.links { display: none; }
+    .status-row .right { display: none; }
+    .nav { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
@@ -20,21 +301,17 @@
     <a href="#" class="brand" aria-label="Chubby's Carpenter Pencils">
       <img class="logo" src="assets/logo.jpg" alt="Chubby's Carpenter Pencils" />
     </a>
-    <nav class="links" aria-label="Main navigation">
+    <nav class="links">
       <a href="#spec">Spec</a>
       <a href="#features">Features</a>
       <a href="#trades">Trades</a>
       <a href="#catalog">Catalog</a>
       <a href="#contact">Order</a>
     </nav>
-    <div class="theme-toggle" role="group" aria-label="Theme">
-      <button data-mode="light" class="active">LT</button>
-      <button data-mode="dark">DK</button>
-    </div>
   </div>
 </header>
 
-<div class="status-bar" role="status" aria-label="Product status">
+<div class="status-bar">
   <div class="wrap status-row">
     <div class="left">
       <span>SKU-001 · CARPENTER PENCIL</span>
@@ -42,7 +319,6 @@
       <span>SHIPS WITHIN 48H</span>
     </div>
     <div class="right">
-      <span>EST. ON THE LEVEL</span>
       <span>v.2026.05</span>
     </div>
   </div>
@@ -50,14 +326,14 @@
 
 <div class="wrap">
 
-  <section class="hero" aria-label="Hero">
+  <section class="hero">
     <div class="hero-grid">
       <div>
         <div class="hero-meta">
-          <span class="sku"><span class="dot" aria-hidden="true"></span>SKU-001 · 7&Prime; &amp; 9&Prime; · 100% RECYCLED</span>
+          <span class="sku"><span class="dot"></span>SKU-001 · 7&Prime; · FSC-CERTIFIED WOOD</span>
         </div>
-        <h1>The carpenter pencil <span class="hi">built like a tool</span>, not a souvenir.</h1>
-        <p class="lede">A magnetic, level-equipped carpenter pencil moulded from 100% recycled plastic. Made for masons, adopted by carpenters, used by everyone.</p>
+        <h1>The <span class="hi">Ultimate</span> Carpenter Pencil</h1>
+        <p class="lede">A level-equipped carpenter pencil milled from FSC-certified wood. Made for masons, adopted by carpenters, used by everyone.</p>
         <div class="cta-row">
           <a class="btn" href="#catalog">View catalog →</a>
           <a class="btn ghost" href="#spec">Read the spec</a>
@@ -69,10 +345,10 @@
           <img src="assets/pencil-hero.png" alt="Chubby's carpenter pencil with level and ruler" />
         </div>
         <div class="product-spec">
-          <div class="product-spec-row"><span class="k">Length</span><span class="v">7&Prime; / 9&Prime;</span></div>
-          <div class="product-spec-row"><span class="k">Body</span><span class="v">100% RECYCLED PLASTIC</span></div>
+          <div class="product-spec-row"><span class="k">Length</span><span class="v">7&Prime;</span></div>
+          <div class="product-spec-row"><span class="k">Body</span><span class="v">FSC-CERTIFIED WOOD</span></div>
           <div class="product-spec-row"><span class="k">Lead</span><span class="v">GRAPHITE, HB</span></div>
-          <div class="product-spec-row"><span class="k">Fittings</span><span class="v">MAGNET + BUBBLE LEVEL</span></div>
+          <div class="product-spec-row"><span class="k">Fittings</span><span class="v">BUBBLE LEVEL</span></div>
         </div>
       </div>
     </div>
@@ -80,22 +356,21 @@
 
 </div>
 
-<div class="sus-band" aria-label="Sustainability highlights">
+<div class="sus-band">
   <div class="wrap sus-row">
-    <div class="item"><span class="pill" aria-hidden="true">01</span> 100% RECYCLED PLASTIC</div>
-    <div class="item"><span class="pill" aria-hidden="true">02</span> ZERO TREES FELLED</div>
-    <div class="item"><span class="pill" aria-hidden="true">03</span> RECYCLABLE AGAIN</div>
-    <div class="item"><span class="pill" aria-hidden="true">04</span> MADE FOR THE TRADE</div>
+    <div class="item"><span class="pill">01</span> FSC-CERTIFIED WOOD</div>
+    <div class="item"><span class="pill">02</span> RESPONSIBLY SOURCED</div>
+    <div class="item"><span class="pill">03</span> BIODEGRADABLE</div>
+    <div class="item"><span class="pill">04</span> MADE FOR THE TRADE</div>
   </div>
 </div>
 
 <div class="wrap">
-
-  <section id="features" aria-labelledby="features-heading">
+  <section id="features">
     <div class="sec-head">
       <div class="left">
         <div class="label">§ 02 — Features</div>
-        <h2 id="features-heading">What's in the pencil.</h2>
+        <h2>What's in the pencil.</h2>
       </div>
       <div class="right">Four things designed in — every one of them earned its place after a year on the jobsite.</div>
     </div>
@@ -103,15 +378,15 @@
     <div class="feature-grid">
       <div class="feature">
         <div class="head"><span class="num">01</span><span class="tag">Material</span></div>
-        <h3>Recycled plastic body</h3>
-        <p>Moulded from 100% post-consumer recycled plastic. No virgin material. No trees felled.</p>
-        <div class="val">100% rPET</div>
+        <h3>FSC-certified wood body</h3>
+        <p>Milled from FSC-certified timber — responsibly sourced from well-managed forests. Honest wood, fully traceable.</p>
+        <div class="val">FSC CERTIFIED</div>
       </div>
       <div class="feature">
         <div class="head"><span class="num">02</span><span class="tag">Fitting</span></div>
-        <h3>Integrated magnet</h3>
-        <p>Snaps to steel components and scaffolding. Won't slide off framing. Won't get lost.</p>
-        <div class="val">N42 NEODYMIUM</div>
+        <h3>Integrated bubble level</h3>
+        <p>A true bubble vial set into the body. Check level and plumb without reaching for a second tool.</p>
+        <div class="val">ON THE LEVEL</div>
       </div>
       <div class="feature">
         <div class="head"><span class="num">03</span><span class="tag">Lead</span></div>
@@ -128,11 +403,11 @@
     </div>
   </section>
 
-  <section id="trades" aria-labelledby="trades-heading">
+  <section id="trades">
     <div class="sec-head">
       <div class="left">
         <div class="label">§ 03 — Application</div>
-        <h2 id="trades-heading">Who's it for.</h2>
+        <h2>Who's it for.</h2>
       </div>
       <div class="right">Originally engineered for masonry. Adopted by every other trade on the site within twelve months.</div>
     </div>
@@ -158,13 +433,13 @@
     </div>
   </section>
 
-  <section id="catalog" aria-labelledby="catalog-heading">
+  <section id="catalog">
     <div class="sec-head">
       <div class="left">
         <div class="label">§ 04 — Catalog</div>
-        <h2 id="catalog-heading">Order by the unit, ten, or hundred.</h2>
+        <h2>Order by the unit, ten, or hundred.</h2>
       </div>
-      <div class="right">Available in 7-inch and 9-inch. Choose your pack size below.</div>
+      <div class="right">Available in a single 7-inch length. Choose your pack size below.</div>
     </div>
 
     <div class="catalog-grid">
@@ -172,11 +447,8 @@
         <div class="tag-band"><span>SKU-001-01</span><span>SINGLE</span></div>
         <div class="body">
           <div class="qty">1<span class="unit">pencil</span></div>
-          <p class="desc">A single pencil to try. Pick a length and decide for yourself.</p>
-          <div class="row">
-            <span class="sku-no">/ 7&Prime; or 9&Prime;</span>
-            <a class="add" href="#contact">+ ADD</a>
-          </div>
+          <p class="desc">A single pencil to try. One length, one job done right.</p>
+          <div class="row"><span class="sku-no">/ 7&Prime;</span><a class="add" href="#">+ ADD</a></div>
         </div>
       </div>
       <div class="sku-card featured">
@@ -184,10 +456,7 @@
         <div class="body">
           <div class="qty">10<span class="unit">pack</span></div>
           <p class="desc">The convenient 10-pack. One for the truck, one for the belt, eight to share.</p>
-          <div class="row">
-            <span class="sku-no">/ 7&Prime; or 9&Prime;</span>
-            <a class="add" href="#contact">+ ADD</a>
-          </div>
+          <div class="row"><span class="sku-no">/ 7&Prime;</span><a class="add" href="#">+ ADD</a></div>
         </div>
       </div>
       <div class="sku-card">
@@ -195,42 +464,37 @@
         <div class="body">
           <div class="qty">100<span class="unit">count</span></div>
           <p class="desc">Site-box quantity for crews, contractors and tool suppliers.</p>
-          <div class="row">
-            <span class="sku-no">/ 7&Prime; or 9&Prime;</span>
-            <a class="add" href="#contact">+ ADD</a>
-          </div>
+          <div class="row"><span class="sku-no">/ 7&Prime;</span><a class="add" href="#">+ ADD</a></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="spec" aria-labelledby="spec-heading">
+  <section id="spec">
     <div class="sec-head">
       <div class="left">
         <div class="label">§ 05 — Tech Spec</div>
-        <h2 id="spec-heading">The fine print.</h2>
+        <h2>The fine print.</h2>
       </div>
       <div class="right">All measurements nominal. Built to last. Recyclable when finished.</div>
     </div>
 
-    <div class="spec-grid">
-      <div class="spec-table-wrap">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;">
+      <div style="background: var(--paper); border: 1px solid var(--rule); padding: 28px;">
         <div class="micro" style="margin-bottom: 16px;">Specification</div>
-        <table class="spec-table">
-          <tbody>
-            <tr><td class="spec-k">LENGTH OPTIONS</td><td class="spec-v">7&Prime; · 9&Prime;</td></tr>
-            <tr><td class="spec-k">BODY MATERIAL</td><td class="spec-v">100% RECYCLED PLASTIC</td></tr>
-            <tr><td class="spec-k">LEAD</td><td class="spec-v">GRAPHITE HB</td></tr>
-            <tr><td class="spec-k">LEAD LIFE</td><td class="spec-v">3× STANDARD</td></tr>
-            <tr><td class="spec-k">LEVEL</td><td class="spec-v">INTEGRATED BUBBLE</td></tr>
-            <tr><td class="spec-k">MAGNET</td><td class="spec-v">N42 NEODYMIUM</td></tr>
-            <tr><td class="spec-k">PACK SIZES</td><td class="spec-v">1 / 10 / 100</td></tr>
-            <tr><td class="spec-k">END-OF-LIFE</td><td class="spec-v spec-v--red">RECYCLABLE AGAIN</td></tr>
-          </tbody>
+        <table style="width:100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 13px;">
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); width: 50%;">LENGTH</td><td style="padding: 10px 0; font-weight:600;">7&Prime;</td></tr>
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); border-top: 1px dashed var(--rule);">BODY MATERIAL</td><td style="padding: 10px 0; font-weight:600; border-top: 1px dashed var(--rule);">FSC-CERTIFIED WOOD</td></tr>
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); border-top: 1px dashed var(--rule);">LEAD</td><td style="padding: 10px 0; font-weight:600; border-top: 1px dashed var(--rule);">GRAPHITE HB</td></tr>
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); border-top: 1px dashed var(--rule);">LEAD LIFE</td><td style="padding: 10px 0; font-weight:600; border-top: 1px dashed var(--rule);">3× STANDARD</td></tr>
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); border-top: 1px dashed var(--rule);">LEVEL</td><td style="padding: 10px 0; font-weight:600; border-top: 1px dashed var(--rule);">INTEGRATED BUBBLE</td></tr>
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); border-top: 1px dashed var(--rule);">CERTIFICATION</td><td style="padding: 10px 0; font-weight:600; border-top: 1px dashed var(--rule);">FSC CERTIFIED</td></tr>
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); border-top: 1px dashed var(--rule);">PACK SIZES</td><td style="padding: 10px 0; font-weight:600; border-top: 1px dashed var(--rule);">1 / 10 / 100</td></tr>
+          <tr><td style="padding: 10px 0; color:var(--ink-soft); border-top: 1px dashed var(--rule);">END-OF-LIFE</td><td style="padding: 10px 0; font-weight:600; color: var(--red); border-top: 1px dashed var(--rule);">BIODEGRADABLE</td></tr>
         </table>
       </div>
-      <div class="spec-image">
-        <img src="assets/pencil-square.png" alt="Chubby's pencil with steel square" />
+      <div style="aspect-ratio: 1/1; overflow: hidden; border: 1px solid var(--rule);">
+        <img src="assets/pencil-square.png" alt="Chubby's pencil with steel square" style="width:100%; height:100%; object-fit:cover;" />
       </div>
     </div>
   </section>
@@ -241,25 +505,19 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <img src="assets/logo.jpg" alt="Chubby's Carpenter Pencils" class="foot-logo" />
-        <p class="foot-tagline">Made for the trade. Built from what was already here.</p>
+        <img src="assets/logo.jpg" alt="Chubby's Carpenter Pencils" style="display:block; width:100%; max-width:280px; height:auto; margin-bottom:16px;" />
+        <p style="color: rgba(240,234,219,.6); font-size: 14px; margin-top: 16px; max-width: 32ch;">Made for the trade. Milled from FSC-certified wood.</p>
       </div>
       <div>
         <h4>Catalog</h4>
-        <a href="#catalog">Single pencils</a>
-        <a href="#catalog">10-packs</a>
-        <a href="#catalog">Site box (100)</a>
-      </div>
-      <div>
-        <h4>Trade</h4>
-        <a href="#contact">Wholesale</a>
-        <a href="#contact">Stockists</a>
-        <a href="#contact">Tech sheets</a>
+        <a href="#">Single pencils</a>
+        <a href="#">10-packs</a>
+        <a href="#">Site box (100)</a>
       </div>
       <div>
         <h4>Contact</h4>
-        <a href="mailto:hello@chubbytools.com">hello@chubbytools.com</a>
-        <a href="tel:+10000000000">+1 (000) 000-0000</a>
+        <a href="#">hello@chubbytools.com</a>
+        <a href="#">+1 (000) 000-0000</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -268,8 +526,6 @@
     </div>
   </div>
 </footer>
-
-<script src="main.js"></script>
 
 </body>
 </html>
