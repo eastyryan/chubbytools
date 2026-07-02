@@ -67,28 +67,15 @@
     padding: 6px 10px; border-radius: 2px;
   }
   nav.links a:hover { background: rgba(255,255,255,.08); color: #fff; }
-
-  /* Status bar */
-  .status-bar {
-    background: var(--card); border-bottom: 1px solid var(--rule);
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    letter-spacing: .04em; text-transform: uppercase;
-    padding: 8px 0; color: var(--ink-soft);
+  nav.links a.order-btn {
+    background: var(--yellow); color: #1a1612; font-weight: 700;
+    border: 2px solid var(--red); border-radius: 2px; padding: 6px 16px;
   }
-  .status-row { display: flex; gap: 24px; justify-content: space-between; }
-  .status-row .left, .status-row .right { display: flex; gap: 24px; }
-  .status-row .ok { color: #4a7a3d; }
+  nav.links a.order-btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
 
   /* Hero */
   .hero { padding: 56px 0 40px; }
   .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: start; }
-  .hero-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
-  .hero-meta .sku {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    letter-spacing: .04em; color: var(--ink-soft);
-  }
-  .hero-meta .sku .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
   .hero h1 {
     font-family: 'Archivo', sans-serif; font-weight: 800;
     font-size: clamp(48px, 6vw, 84px); line-height: .95;
@@ -327,6 +314,10 @@
     border-left: 3px solid var(--yellow);
     font-size: 13px; color: var(--ink-soft); line-height: 1.5;
   }
+  .order-intro {
+    margin: 20px 4px 0; font-size: 19px; line-height: 1.5;
+    color: var(--ink); max-width: 40ch;
+  }
   /* Confirmation */
   .confirm-panel { display: none; }
   .confirm-panel.show { display: block; }
@@ -371,7 +362,6 @@
     .sec-head { grid-template-columns: 1fr; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
     nav.links { display: none; }
-    .status-row .right { display: none; }
     .nav { grid-template-columns: 1fr; }
   }
 </style>
@@ -388,32 +378,16 @@
       <a href="#features">Features</a>
       <a href="#trades">Trades</a>
       <a href="#catalog">Catalog</a>
-      <a href="#order">Order</a>
+      <a href="#order" class="order-btn">Order</a>
     </nav>
   </div>
 </header>
-
-<div class="status-bar">
-  <div class="wrap status-row">
-    <div class="left">
-      <span>SKU-001 · CARPENTER PENCIL</span>
-      <span class="ok">● IN STOCK</span>
-      <span>SHIPS WITHIN 48H</span>
-    </div>
-    <div class="right">
-      <span>v.2026.05</span>
-    </div>
-  </div>
-</div>
 
 <div class="wrap">
 
   <section class="hero">
     <div class="hero-grid">
       <div>
-        <div class="hero-meta">
-          <span class="sku"><span class="dot"></span>SKU-001 · 7&Prime; · FSC-CERTIFIED WOOD</span>
-        </div>
         <h1>The <span class="hi">Ultimate</span> Carpenter Pencil</h1>
         <p class="lede">A level-equipped carpenter pencil milled from FSC-certified wood. Made for masons, adopted by carpenters, used by everyone.</p>
         <div class="cta-row">
@@ -451,10 +425,9 @@
   <section id="features">
     <div class="sec-head">
       <div class="left">
-        <div class="label">§ 02 — Features</div>
+        <div class="label">Features</div>
         <h2>What's in the pencil.</h2>
       </div>
-      <div class="right">Four things designed in — every one of them earned its place after a year on the jobsite.</div>
     </div>
 
     <div class="feature-grid">
@@ -488,10 +461,9 @@
   <section id="trades">
     <div class="sec-head">
       <div class="left">
-        <div class="label">§ 03 — Application</div>
+        <div class="label">Application</div>
         <h2>Who's it for.</h2>
       </div>
-      <div class="right">Originally engineered for masonry. Adopted by every other trade on the site within twelve months.</div>
     </div>
 
     <div class="trades-block">
@@ -518,7 +490,7 @@
   <section id="catalog">
     <div class="sec-head">
       <div class="left">
-        <div class="label">§ 04 — Catalog</div>
+        <div class="label">Catalog</div>
         <h2>Order by the unit, ten, or hundred.</h2>
       </div>
       <div class="right">Available in a single 7-inch length. Choose your pack size below.</div>
@@ -555,10 +527,9 @@
   <section id="order">
     <div class="sec-head">
       <div class="left">
-        <div class="label">§ 05 — Order</div>
+        <div class="label">Order</div>
         <h2>Place your order.</h2>
       </div>
-      <div class="right">Pay by Interac e-Transfer. Build your order below — you'll get an order code to put in the e-Transfer message so we can match your payment.</div>
     </div>
 
     <div class="order-grid">
@@ -634,6 +605,8 @@
           </div>
         </div>
 
+        <p class="order-intro">Pay by Interac e-Transfer. Build your order — you'll get an order code to put in the e-Transfer message so we can match your payment.</p>
+
         <div class="order-panel confirm-panel" id="confirm" style="margin-top:16px;">
           <div class="panel-band" style="background: var(--red);"><span>ORDER PLACED</span><span>PAY BY E-TRANSFER</span></div>
           <div class="panel-body">
@@ -656,7 +629,7 @@
   <section id="spec">
     <div class="sec-head">
       <div class="left">
-        <div class="label">§ 06 — Tech Spec</div>
+        <div class="label">Tech Spec</div>
         <h2>The fine print.</h2>
       </div>
       <div class="right">All measurements nominal. Built to last. Recyclable when finished.</div>
