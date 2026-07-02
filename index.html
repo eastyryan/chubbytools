@@ -270,6 +270,87 @@
   .sku-card.featured { background: var(--card); }
   .sku-card.featured .tag-band { background: var(--red); }
 
+  /* Order / checkout */
+  .order-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; align-items: start; }
+  .order-panel { background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; }
+  .order-panel .panel-band {
+    background: var(--ink); color: var(--bg);
+    padding: 8px 16px; display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  .order-panel .panel-body { padding: 24px; }
+  .order-line {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center;
+    padding: 12px 0; border-bottom: 1px dashed var(--rule);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .order-line .name { text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+  .order-line .name .ea { display: block; color: var(--ink-soft); font-weight: 400; font-size: 11px; margin-top: 2px; }
+  .order-line .amt { font-weight: 600; min-width: 76px; text-align: right; }
+  .stepper { display: inline-flex; align-items: center; border: 2px solid var(--ink); }
+  .stepper button {
+    width: 32px; height: 32px; border: none; background: var(--ink); color: var(--bg);
+    font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; cursor: pointer;
+  }
+  .stepper button:hover { background: var(--red); }
+  .stepper .n { width: 44px; text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 14px; }
+  .totals { margin-top: 8px; }
+  .totals .t-row {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    letter-spacing: .03em; text-transform: uppercase;
+  }
+  .totals .t-row .k { color: var(--ink-soft); }
+  .totals .t-row.grand {
+    border-top: 2px solid var(--ink); margin-top: 8px; padding-top: 14px;
+    font-size: 17px; font-weight: 700;
+  }
+  .order-form label {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft);
+    margin: 14px 0 5px;
+  }
+  .order-form input, .order-form select, .order-form textarea {
+    width: 100%; padding: 10px 12px;
+    border: 1px solid var(--rule); border-radius: 2px; background: var(--bg);
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--ink);
+  }
+  .order-form input:focus, .order-form select:focus, .order-form textarea:focus {
+    outline: 2px solid var(--yellow); border-color: var(--ink);
+  }
+  .order-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .order-form button.btn { width: 100%; justify-content: center; margin-top: 22px; cursor: pointer; }
+  .order-form button.btn:disabled { opacity: .5; cursor: not-allowed; }
+  .order-note {
+    margin-top: 14px; padding: 12px 14px; background: var(--card);
+    border-left: 3px solid var(--yellow);
+    font-size: 13px; color: var(--ink-soft); line-height: 1.5;
+  }
+  /* Confirmation */
+  .confirm-panel { display: none; }
+  .confirm-panel.show { display: block; }
+  .order-code-box {
+    background: var(--yellow); border: 2px solid var(--red);
+    padding: 18px; text-align: center; margin: 18px 0;
+  }
+  .order-code-box .lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #1a1612; }
+  .order-code-box .code {
+    font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 42px;
+    letter-spacing: .04em; color: #1a1612; line-height: 1.1;
+  }
+  .etransfer-steps { list-style: none; padding: 0; margin: 16px 0 0; }
+  .etransfer-steps li {
+    display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start;
+    padding: 10px 0; border-bottom: 1px dashed var(--rule); font-size: 14px;
+  }
+  .etransfer-steps li:last-child { border-bottom: none; }
+  .etransfer-steps li .stp {
+    background: var(--ink); color: var(--bg); font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700; padding: 3px 0; text-align: center;
+  }
+  .etransfer-steps li strong.mono { font-family: 'JetBrains Mono', monospace; }
+
   /* Footer */
   footer {
     background: var(--ink); color: var(--paper);
@@ -283,6 +364,7 @@
 
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; }
+    .order-grid { grid-template-columns: 1fr; }
     .feature-grid { grid-template-columns: 1fr; }
     .trades-grid { grid-template-columns: 1fr; }
     .catalog-grid { grid-template-columns: 1fr; }
@@ -306,7 +388,7 @@
       <a href="#features">Features</a>
       <a href="#trades">Trades</a>
       <a href="#catalog">Catalog</a>
-      <a href="#contact">Order</a>
+      <a href="#order">Order</a>
     </nav>
   </div>
 </header>
@@ -448,7 +530,7 @@
         <div class="body">
           <div class="qty">1<span class="unit">pencil</span></div>
           <p class="desc">A single pencil to try. One length, one job done right.</p>
-          <div class="row"><span class="sku-no">/ 7&Prime;</span><a class="add" href="#">+ ADD</a></div>
+          <div class="row"><span class="sku-no">$4.00 / 7&Prime;</span><a class="add" href="#order" data-add="single">+ ADD</a></div>
         </div>
       </div>
       <div class="sku-card featured">
@@ -456,7 +538,7 @@
         <div class="body">
           <div class="qty">10<span class="unit">pack</span></div>
           <p class="desc">The convenient 10-pack. One for the truck, one for the belt, eight to share.</p>
-          <div class="row"><span class="sku-no">/ 7&Prime;</span><a class="add" href="#">+ ADD</a></div>
+          <div class="row"><span class="sku-no">$20.00 / 7&Prime;</span><a class="add" href="#order" data-add="ten">+ ADD</a></div>
         </div>
       </div>
       <div class="sku-card">
@@ -464,7 +546,108 @@
         <div class="body">
           <div class="qty">100<span class="unit">count</span></div>
           <p class="desc">Site-box quantity for crews, contractors and tool suppliers.</p>
-          <div class="row"><span class="sku-no">/ 7&Prime;</span><a class="add" href="#">+ ADD</a></div>
+          <div class="row"><span class="sku-no">$100.00 / 7&Prime;</span><a class="add" href="#order" data-add="hundred">+ ADD</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="order">
+    <div class="sec-head">
+      <div class="left">
+        <div class="label">§ 05 — Order</div>
+        <h2>Place your order.</h2>
+      </div>
+      <div class="right">Pay by Interac e-Transfer. Build your order below — you'll get an order code to put in the e-Transfer message so we can match your payment.</div>
+    </div>
+
+    <div class="order-grid">
+      <!-- Left: cart + customer details -->
+      <div class="order-panel" id="order-build">
+        <div class="panel-band"><span>ORDER SHEET</span><span>CAD</span></div>
+        <div class="panel-body">
+          <div class="order-line">
+            <span class="name">Single pencil<span class="ea">$4.00 ea · SKU-001-01</span></span>
+            <span class="stepper"><button type="button" data-step="single" data-dir="-1" aria-label="Fewer singles">−</button><span class="n" id="qty-single">0</span><button type="button" data-step="single" data-dir="1" aria-label="More singles">+</button></span>
+            <span class="amt" id="amt-single">$0.00</span>
+          </div>
+          <div class="order-line">
+            <span class="name">10-pack<span class="ea">$20.00 ea · SKU-001-10</span></span>
+            <span class="stepper"><button type="button" data-step="ten" data-dir="-1" aria-label="Fewer 10-packs">−</button><span class="n" id="qty-ten">0</span><button type="button" data-step="ten" data-dir="1" aria-label="More 10-packs">+</button></span>
+            <span class="amt" id="amt-ten">$0.00</span>
+          </div>
+          <div class="order-line" style="border-bottom:none;">
+            <span class="name">Site box (100)<span class="ea">$100.00 ea · SKU-001-100</span></span>
+            <span class="stepper"><button type="button" data-step="hundred" data-dir="-1" aria-label="Fewer site boxes">−</button><span class="n" id="qty-hundred">0</span><button type="button" data-step="hundred" data-dir="1" aria-label="More site boxes">+</button></span>
+            <span class="amt" id="amt-hundred">$0.00</span>
+          </div>
+
+          <form class="order-form" id="order-form" novalidate>
+            <label for="of-name">Name</label>
+            <input id="of-name" name="name" type="text" autocomplete="name" required />
+            <label for="of-email">Email</label>
+            <input id="of-email" name="email" type="email" autocomplete="email" required />
+            <label for="of-address">Shipping address</label>
+            <input id="of-address" name="address" type="text" autocomplete="street-address" required />
+            <div class="two">
+              <div>
+                <label for="of-city">City</label>
+                <input id="of-city" name="city" type="text" autocomplete="address-level2" required />
+              </div>
+              <div>
+                <label for="of-postal">Postal code</label>
+                <input id="of-postal" name="postal" type="text" autocomplete="postal-code" required />
+              </div>
+            </div>
+            <label for="of-province">Province / Territory</label>
+            <select id="of-province" name="province" required>
+              <option value="" selected disabled>Select province…</option>
+              <option value="AB">Alberta</option>
+              <option value="BC">British Columbia</option>
+              <option value="MB">Manitoba</option>
+              <option value="NB">New Brunswick</option>
+              <option value="NL">Newfoundland and Labrador</option>
+              <option value="NS">Nova Scotia</option>
+              <option value="NT">Northwest Territories</option>
+              <option value="NU">Nunavut</option>
+              <option value="ON">Ontario</option>
+              <option value="PE">Prince Edward Island</option>
+              <option value="QC">Quebec</option>
+              <option value="SK">Saskatchewan</option>
+              <option value="YT">Yukon</option>
+            </select>
+            <button class="btn" type="submit" id="place-order">Place order →</button>
+            <div class="order-note">Payment is by <strong>Interac e-Transfer</strong>. Nothing is charged here — you'll get an order code and e-Transfer instructions on the next step.</div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right: totals, then confirmation after ordering -->
+      <div>
+        <div class="order-panel">
+          <div class="panel-band"><span>TOTALS</span><span id="tax-label">TAX —</span></div>
+          <div class="panel-body totals">
+            <div class="t-row"><span class="k">Subtotal</span><span id="t-sub">$0.00</span></div>
+            <div class="t-row"><span class="k">Shipping</span><span id="t-ship">—</span></div>
+            <div class="t-row"><span class="k" id="t-tax-k">Tax</span><span id="t-tax">—</span></div>
+            <div class="t-row grand"><span>Total</span><span id="t-total">$0.00</span></div>
+          </div>
+        </div>
+
+        <div class="order-panel confirm-panel" id="confirm" style="margin-top:16px;">
+          <div class="panel-band" style="background: var(--red);"><span>ORDER PLACED</span><span>PAY BY E-TRANSFER</span></div>
+          <div class="panel-body">
+            <div class="order-code-box">
+              <div class="lbl">Your order code</div>
+              <div class="code" id="confirm-code">CHB-00000</div>
+            </div>
+            <ol class="etransfer-steps">
+              <li><span class="stp">1</span><span>Open your banking app and send an <strong>Interac e-Transfer</strong> for <strong class="mono" id="confirm-total">$0.00</strong> to <strong class="mono">chubbytoolscp@gmail.com</strong></span></li>
+              <li><span class="stp">2</span><span>Put your order code <strong class="mono" id="confirm-code2">CHB-00000</strong> in the e-Transfer <strong>message</strong> — that's how we match your payment to your order.</span></li>
+              <li><span class="stp">3</span><span>We ship within 48h of payment and confirm to your email.</span></li>
+            </ol>
+            <div class="order-note" id="confirm-note">Your order details have been sent to us.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -473,7 +656,7 @@
   <section id="spec">
     <div class="sec-head">
       <div class="left">
-        <div class="label">§ 05 — Tech Spec</div>
+        <div class="label">§ 06 — Tech Spec</div>
         <h2>The fine print.</h2>
       </div>
       <div class="right">All measurements nominal. Built to last. Recyclable when finished.</div>
@@ -510,14 +693,14 @@
       </div>
       <div>
         <h4>Catalog</h4>
-        <a href="#">Single pencils</a>
-        <a href="#">10-packs</a>
-        <a href="#">Site box (100)</a>
+        <a href="#catalog">Single pencils — $4</a>
+        <a href="#catalog">10-packs — $20</a>
+        <a href="#catalog">Site box (100) — $100</a>
       </div>
       <div>
         <h4>Contact</h4>
-        <a href="#">hello@chubbytools.com</a>
-        <a href="#">+1 (000) 000-0000</a>
+        <a href="mailto:chubbytoolscp@gmail.com">chubbytoolscp@gmail.com</a>
+        <a href="#order">Order &amp; pay by e-Transfer</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -527,5 +710,6 @@
   </div>
 </footer>
 
+<script src="main.js" defer></script>
 </body>
 </html>
