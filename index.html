@@ -75,7 +75,7 @@
 
   /* Hero */
   .hero { padding: 56px 0 40px; }
-  .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: start; }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
   .hero h1 {
     font-family: 'Archivo', sans-serif; font-weight: 800;
     font-size: clamp(48px, 6vw, 84px); line-height: .95;
@@ -98,6 +98,7 @@
   .btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
   .btn.ghost { background: transparent; color: var(--ink); }
   .btn.ghost:hover { background: var(--ink); color: var(--bg); }
+  .btn.ghost.order:hover { background: var(--yellow); border-color: var(--ink); color: var(--ink); }
 
   /* Hero image with spec callouts */
   .product-card {
@@ -407,7 +408,8 @@
         <p class="lede">A level-equipped carpenter pencil milled from FSC-certified wood. Made for masons, adopted by carpenters, used by everyone.</p>
         <div class="cta-row">
           <a class="btn" href="#catalog">View catalog →</a>
-          <a class="btn ghost" href="#spec">Read the spec</a>
+          <a class="btn" href="#spec">Read the spec</a>
+          <a class="btn ghost order" href="#order">Order</a>
         </div>
       </div>
       <div class="product-card">
