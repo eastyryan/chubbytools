@@ -314,6 +314,21 @@
     border-left: 3px solid var(--yellow);
     font-size: 13px; color: var(--ink-soft); line-height: 1.5;
   }
+  .addr-wrap { position: relative; }
+  .addr-suggest {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 20;
+    background: var(--paper); border: 2px solid var(--ink); border-top: none;
+    max-height: 240px; overflow-y: auto;
+    box-shadow: 0 8px 16px rgba(0,0,0,.12);
+  }
+  .addr-suggest .opt {
+    padding: 10px 12px; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .addr-suggest .opt:last-child { border-bottom: none; }
+  .addr-suggest .opt:hover, .addr-suggest .opt.active { background: var(--yellow); }
+  .addr-suggest .opt .sub { display: block; font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
   .order-intro {
     margin: 20px 4px 0; font-size: 19px; line-height: 1.5;
     color: var(--ink); max-width: 40ch;
@@ -559,34 +574,37 @@
             <label for="of-email">Email</label>
             <input id="of-email" name="email" type="email" autocomplete="email" required />
             <label for="of-address">Shipping address</label>
-            <input id="of-address" name="address" type="text" autocomplete="street-address" required />
+            <div class="addr-wrap">
+              <input id="of-address" name="address" type="text" autocomplete="street-address" placeholder="Start typing your address…" required />
+              <div class="addr-suggest" id="addr-suggest" hidden></div>
+            </div>
             <div class="two">
               <div>
                 <label for="of-city">City</label>
                 <input id="of-city" name="city" type="text" autocomplete="address-level2" required />
               </div>
               <div>
-                <label for="of-postal">Postal code</label>
-                <input id="of-postal" name="postal" type="text" autocomplete="postal-code" required />
+                <label for="of-province">Province / Territory</label>
+                <select id="of-province" name="province" required>
+                  <option value="" selected disabled>Select…</option>
+                  <option value="AB">Alberta</option>
+                  <option value="BC">British Columbia</option>
+                  <option value="MB">Manitoba</option>
+                  <option value="NB">New Brunswick</option>
+                  <option value="NL">Newfoundland and Labrador</option>
+                  <option value="NS">Nova Scotia</option>
+                  <option value="NT">Northwest Territories</option>
+                  <option value="NU">Nunavut</option>
+                  <option value="ON">Ontario</option>
+                  <option value="PE">Prince Edward Island</option>
+                  <option value="QC">Quebec</option>
+                  <option value="SK">Saskatchewan</option>
+                  <option value="YT">Yukon</option>
+                </select>
               </div>
             </div>
-            <label for="of-province">Province / Territory</label>
-            <select id="of-province" name="province" required>
-              <option value="" selected disabled>Select province…</option>
-              <option value="AB">Alberta</option>
-              <option value="BC">British Columbia</option>
-              <option value="MB">Manitoba</option>
-              <option value="NB">New Brunswick</option>
-              <option value="NL">Newfoundland and Labrador</option>
-              <option value="NS">Nova Scotia</option>
-              <option value="NT">Northwest Territories</option>
-              <option value="NU">Nunavut</option>
-              <option value="ON">Ontario</option>
-              <option value="PE">Prince Edward Island</option>
-              <option value="QC">Quebec</option>
-              <option value="SK">Saskatchewan</option>
-              <option value="YT">Yukon</option>
-            </select>
+            <label for="of-postal">Postal code</label>
+            <input id="of-postal" name="postal" type="text" autocomplete="postal-code" required />
             <button class="btn" type="submit" id="place-order">Place order →</button>
             <div class="order-note">Payment is by <strong>Interac e-Transfer</strong>. Nothing is charged here — you'll get an order code and e-Transfer instructions on the next step.</div>
           </form>

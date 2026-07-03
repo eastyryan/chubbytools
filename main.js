@@ -87,6 +87,76 @@ document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click'
 
 $('of-province').addEventListener('change', recalc);
 
+// ---------------------------------------------------------------
+// Address autocomplete (Photon / OpenStreetMap — free, no API key)
+// Suggests Canadian addresses as you type; picking one fills
+// city, province and postal code automatically.
+// ---------------------------------------------------------------
+const PROV_CODE = {
+  'alberta': 'AB', 'british columbia': 'BC', 'colombie-britannique': 'BC',
+  'manitoba': 'MB', 'new brunswick': 'NB', 'nouveau-brunswick': 'NB',
+  'newfoundland and labrador': 'NL', 'terre-neuve-et-labrador': 'NL',
+  'nova scotia': 'NS', 'nouvelle-écosse': 'NS',
+  'northwest territories': 'NT', 'territoires du nord-ouest': 'NT',
+  'nunavut': 'NU', 'ontario': 'ON', 'prince edward island': 'PE',
+  'île-du-prince-édouard': 'PE', 'quebec': 'QC', 'québec': 'QC',
+  'saskatchewan': 'SK', 'yukon': 'YT',
+};
+
+const addrInput = $('of-address');
+const suggestBox = $('addr-suggest');
+let addrTimer = null;
+let addrAbort = null;
+
+function hideSuggest() { suggestBox.hidden = true; suggestBox.innerHTML = ''; }
+
+function pickSuggestion(p) {
+  const street = [p.housenumber, p.street || p.name].filter(Boolean).join(' ');
+  addrInput.value = street;
+  if (p.city || p.town || p.village) $('of-city').value = p.city || p.town || p.village;
+  if (p.postcode) $('of-postal').value = p.postcode;
+  const code = PROV_CODE[(p.state || '').toLowerCase()];
+  if (code) $('of-province').value = code;
+  hideSuggest();
+  recalc();
+}
+
+addrInput.addEventListener('input', () => {
+  clearTimeout(addrTimer);
+  const q = addrInput.value.trim();
+  if (q.length < 4) { hideSuggest(); return; }
+  addrTimer = setTimeout(async () => {
+    try {
+      if (addrAbort) addrAbort.abort();
+      addrAbort = new AbortController();
+      const res = await fetch(
+        'https://photon.komoot.io/api/?q=' + encodeURIComponent(q + ', Canada') + '&limit=6&lang=en',
+        { signal: addrAbort.signal }
+      );
+      const data = await res.json();
+      const hits = (data.features || [])
+        .map(f => f.properties)
+        .filter(p => p.countrycode === 'CA' && (p.housenumber || p.street || p.name));
+      if (!hits.length) { hideSuggest(); return; }
+      suggestBox.innerHTML = '';
+      hits.slice(0, 5).forEach(p => {
+        const line1 = [p.housenumber, p.street || p.name].filter(Boolean).join(' ');
+        const line2 = [p.city || p.town || p.village, p.state, p.postcode].filter(Boolean).join(', ');
+        const div = document.createElement('div');
+        div.className = 'opt';
+        div.innerHTML = `${line1}<span class="sub">${line2}</span>`;
+        // mousedown fires before the input's blur, so the pick registers
+        div.addEventListener('mousedown', ev => { ev.preventDefault(); pickSuggestion(p); });
+        suggestBox.appendChild(div);
+      });
+      suggestBox.hidden = false;
+    } catch (_) { /* network hiccup or aborted — just don't suggest */ }
+  }, 300);
+});
+
+addrInput.addEventListener('blur', () => setTimeout(hideSuggest, 150));
+addrInput.addEventListener('keydown', e => { if (e.key === 'Escape') hideSuggest(); });
+
 $('order-form').addEventListener('submit', async e => {
   e.preventDefault();
   const form = e.target;
